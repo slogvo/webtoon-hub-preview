@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+
+    /* Webtoon signature green */
+    --primary: 150 100% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 7%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 150 100% 43%;
+
+    --radius: 0.5rem;
+
+    /* Webtoon specific colors */
+    --webtoon-green: 150 100% 43%;
+    --webtoon-red: 0 85% 55%;
+    --webtoon-dark: 0 0% 7%;
+    --rank-up: 150 100% 43%;
+    --rank-down: 0 85% 55%;
+    --new-badge: 0 85% 55%;
+
+    /* Category colors */
+    --category-drama: 280 60% 55%;
+    --category-fantasy: 210 80% 55%;
+    --category-comedy: 45 100% 50%;
+    --category-action: 0 85% 55%;
+    --category-romance: 340 80% 60%;
+    --category-thriller: 0 0% 20%;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 150 100% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 150 100% 43%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: "Noto Sans", sans-serif;
+  }
+}
+
+@layer components {
+  .webtoon-logo {
+    @apply font-extrabold text-xl tracking-tight;
+    background: hsl(var(--webtoon-green));
+    color: hsl(var(--primary-foreground));
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+  }
+
+  .nav-link {
+    @apply font-bold text-sm tracking-wide uppercase hover:text-primary transition-colors;
+  }
+
+  .category-pill {
+    @apply px-5 py-2.5 rounded-full text-sm font-semibold transition-all cursor-pointer;
+    @apply bg-secondary text-secondary-foreground hover:bg-muted;
+  }
+
+  .category-pill-active {
+    @apply bg-foreground text-background;
+  }
+
+  .comic-card {
+    @apply relative overflow-hidden rounded-lg cursor-pointer;
+  }
+
+  .comic-card-image {
+    @apply w-full aspect-[3/4] object-cover transition-transform duration-300 group-hover:scale-105;
+  }
+
+  .rank-number {
+    @apply absolute bottom-0 left-1 text-7xl font-extrabold leading-none;
+    color: hsl(var(--background));
+    text-shadow:
+      2px 2px 0 hsl(var(--foreground)),
+      -2px 2px 0 hsl(var(--foreground)),
+      2px -2px 0 hsl(var(--foreground)),
+      -2px -2px 0 hsl(var(--foreground));
+  }
+
+  .rank-change {
+    @apply text-xs font-bold ml-1;
+  }
+
+  .rank-up {
+    color: hsl(var(--rank-up));
+  }
+
+  .rank-down {
+    color: hsl(var(--rank-down));
+  }
+
+  .new-badge {
+    @apply absolute top-2 left-2 px-2 py-0.5 text-xs font-bold rounded;
+    background: hsl(var(--new-badge));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-foreground;
+  }
+
+  .view-all {
+    @apply text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1;
+  }
+
+  .banner-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(220 15% 20%) 0%,
+      hsl(220 20% 12%) 100%
+    );
+  }
+
+  .carousel-arrow {
+    @apply absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-background/90 shadow-lg flex items-center justify-center cursor-pointer hover:bg-background transition-colors z-10;
+  }
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
