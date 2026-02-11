@@ -75,9 +75,10 @@ Status: ✅ Done
 - [x] Integrate Skeleton Loading (loading.tsx & SmartImage) ✅
 - [x] Clean up Footer & Remove "New on WEBTOON" ✅
 - [x] Fix UI Overlaps & Rank Number Visibility ✅
-- [x] /verification-and-push (Final Work) ✅ [20:55]
+- [x] Refine Detail Page Skeleton to match UI ✅
+- [x] /verification-and-push (Final Work) ✅ [21:00]
 
 ---
 
 **Project Status:** ✅ Final Polish Complete
-**Completion Time:** 2026-02-11 20:55
+**Completion Time:** 2026-02-11 21:00
