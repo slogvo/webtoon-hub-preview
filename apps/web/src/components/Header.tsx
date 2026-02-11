@@ -62,7 +62,7 @@ const Header = () => {
         isHidden ? "-translate-y-full" : "translate-y-0"
       )}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
         <div className="flex h-20 items-center justify-between lg:h-[84px]">
           {/* Logo (Left) */}
           <div className="flex flex-1 items-center justify-start">
@@ -76,7 +76,7 @@ const Header = () => {
                 alt="4HumAI Logo"
                 width={129}
                 height={44}
-                className="h-11 rounded-xl dark:invert"
+                className="h-11 rounded-xl invert dark:invert-0"
                 priority
               />
             </Link>

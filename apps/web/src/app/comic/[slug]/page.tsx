@@ -192,7 +192,7 @@ export default async function ComicDetailPage({ params }: PageProps) {
 
         {/* Content Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
             <span className="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-3">
               {comic.genre}
             </span>
@@ -213,7 +213,7 @@ export default async function ComicDetailPage({ params }: PageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Episode List */}
           <div className="lg:col-span-2">

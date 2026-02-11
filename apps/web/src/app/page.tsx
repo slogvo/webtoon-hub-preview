@@ -38,7 +38,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="flex flex-col gap-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex flex-col gap-12 pb-20 max-w-7xl mx-auto">
         <TrendingSection />
         <CategorySection />
         <NewOnWebtoon />
