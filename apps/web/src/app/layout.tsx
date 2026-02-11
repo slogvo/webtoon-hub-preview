@@ -117,7 +117,7 @@ export default function RootLayout({
             <TooltipProvider delayDuration={0}>
               <div className="bg-background text-foreground min-h-screen transition-colors duration-300">
                 <Header />
-                <div className="h-20 lg:h-[84px]" />
+                <div className="h-20 lg:h-[84px] header-spacer" />
                 <main>{children}</main>
                 <Footer />
               </div>

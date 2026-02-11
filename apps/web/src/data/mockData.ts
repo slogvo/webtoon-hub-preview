@@ -111,7 +111,7 @@ export const comics: Comic[] = [
     subscribers: "311,310",
     rating: 9.8,
     updateDay: "EVERY FRIDAY",
-    episodes: generateEpisodes(15, [
+    episodes: generateEpisodes(5, [
       comic1,
       comic2,
       comic3,
@@ -134,7 +134,7 @@ export const comics: Comic[] = [
     subscribers: "245,000",
     rating: 9.5,
     updateDay: "EVERY MONDAY",
-    episodes: generateEpisodes(10, [comic1, comic7, comic8, comic9, comic10]),
+    episodes: generateEpisodes(5, [comic1, comic7, comic8, comic9, comic10]),
   },
   {
     id: 3,
@@ -150,7 +150,7 @@ export const comics: Comic[] = [
     subscribers: "298,500",
     rating: 9.6,
     updateDay: "EVERY TUESDAY",
-    episodes: generateEpisodes(12, [comic2, comic4, comic8]),
+    episodes: generateEpisodes(5, [comic2, comic4, comic8]),
   },
   {
     id: 4,
@@ -182,7 +182,7 @@ export const comics: Comic[] = [
     subscribers: "356,000",
     rating: 9.7,
     updateDay: "EVERY THURSDAY",
-    episodes: generateEpisodes(14, [comic4, comic8]),
+    episodes: generateEpisodes(5, [comic4, comic8]),
   },
   {
     id: 6,
@@ -198,7 +198,7 @@ export const comics: Comic[] = [
     subscribers: "223,000",
     rating: 9.4,
     updateDay: "EVERY FRIDAY",
-    episodes: generateEpisodes(11, [comic5, comic1]),
+    episodes: generateEpisodes(5, [comic5, comic1]),
   },
   {
     id: 7,
@@ -229,7 +229,7 @@ export const comics: Comic[] = [
     subscribers: "412,000",
     rating: 9.9,
     updateDay: "EVERY SUNDAY",
-    episodes: generateEpisodes(12, [comic7, comic4]),
+    episodes: generateEpisodes(5, [comic7, comic4]),
   },
   {
     id: 9,
@@ -244,7 +244,7 @@ export const comics: Comic[] = [
     subscribers: "1.2M",
     rating: 9.9,
     updateDay: "EVERY WEDNESDAY",
-    episodes: generateEpisodes(18, [comic8, comic2]),
+    episodes: generateEpisodes(5, [comic8, comic2]),
   },
   {
     id: 10,
@@ -259,7 +259,7 @@ export const comics: Comic[] = [
     subscribers: "3.5M",
     rating: 9.8,
     updateDay: "EVERY MONDAY",
-    episodes: generateEpisodes(25, [comic9, comic10]),
+    episodes: generateEpisodes(5, [comic9, comic10]),
   },
   {
     id: 11,
@@ -274,7 +274,7 @@ export const comics: Comic[] = [
     subscribers: "2.8M",
     rating: 9.9,
     updateDay: "EVERY THURSDAY",
-    episodes: generateEpisodes(17, [comic10, comic1]),
+    episodes: generateEpisodes(5, [comic10, comic1]),
   },
   {
     id: 12,
@@ -289,7 +289,7 @@ export const comics: Comic[] = [
     subscribers: "950,000",
     rating: 9.7,
     updateDay: "EVERY FRIDAY",
-    episodes: generateEpisodes(15, [comic1, comic4]),
+    episodes: generateEpisodes(5, [comic1, comic4]),
   },
   {
     id: 13,

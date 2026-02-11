@@ -2,7 +2,6 @@ import { AssetClient } from "@/lib/bucket/client";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import NextImage from "next/image";
-import Link from "next/link";
 import { EpisodeHeader } from "@/components/episode/EpisodeHeader";
 import { EpisodeNavigation } from "@/components/episode/EpisodeNavigation";
 import { EpisodeEndActions } from "@/components/episode/EpisodeEndActions";
@@ -15,8 +14,6 @@ interface PageProps {
 // Helper: Format episode number to ID (e.g. 1 -> ep-001)
 // TODO: This logic should match the backend/bucket generation logic strictly.
 const formatEpisodeId = (num: number) => `ep-${String(num).padStart(3, "0")}`;
-// Default locale for now
-const DEFAULT_LOCALE = "en";
 
 export async function generateMetadata({
   params,
@@ -47,7 +44,7 @@ export async function generateMetadata({
         images: [{ url: coverUrl }],
       },
     };
-  } catch (e) {
+  } catch {
     return { title: "Episode Not Found" };
   }
 }
@@ -134,7 +131,7 @@ export default async function EpisodeViewerPage({ params }: PageProps) {
           }}
         />
 
-        <div className="min-h-screen bg-[#1a1a1a]">
+        <div className="min-h-screen bg-background no-layout">
           {/* 
                 Warning: EpisodeHeader expects a full 'comic' object. 
                 We are passing a stripped down version. If it accesses properties we didn't mock, it will crash.

@@ -5,17 +5,12 @@ import Link from "next/link";
 import {
   Eye,
   Users,
-  Heart,
   ChevronRight,
   ArrowLeft,
-  Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getImageUrl } from "@/lib/image-utils";
 import EpisodeList from "@/components/EpisodeList";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { SeriesMeta, SeriesIndex } from "@/lib/bucket/types";
+import { SeriesMeta } from "@/lib/bucket/types";
 import { format } from "date-fns";
 import { comics } from "@/data/mockData";
 
@@ -125,18 +120,19 @@ export default async function ComicDetailPage({ params }: PageProps) {
   const episodesCount = mockSeries ? mockSeries.episodes.length : 5;
   const episodes = Array.from({ length: episodesCount }, (_, i) => {
     const episodeId = `ep-${String(i + 1).padStart(3, "0")}`;
-    const thumbHash = seriesMeta.thumbnails[0]?.hash || "thumb-hash-1.jpg";
+    // Using the first panel of each episode as an automatic thumbnail for better variety
+    const panelHash = `panel-${seriesMeta.seriesId}-${episodeId}-${defaultLocale}-1.jpg`;
 
     return {
       id: episodeId,
       title: mockSeries?.episodes[i]?.title || `Episode ${i + 1}`,
       number: i + 1,
       date: seriesMeta.publishAt ? format(new Date(seriesMeta.publishAt), "MMM dd, yyyy") : "N/A",
-      thumbnail: AssetClient.getThumbUrl(
+      thumbnail: AssetClient.getPanelUrl(
         seriesMeta.seriesId,
         episodeId,
         defaultLocale,
-        thumbHash,
+        panelHash,
       ),
       likes: mockSeries?.episodes[i]?.likes || 0,
       panels: [],
@@ -169,9 +165,7 @@ export default async function ComicDetailPage({ params }: PageProps) {
         }}
       />
 
-      <div className="min-h-screen bg-background">
-        <Header />
-
+      <div className="pb-20">
         <div className="relative h-[400px] overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center"
@@ -181,81 +175,83 @@ export default async function ComicDetailPage({ params }: PageProps) {
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
 
-          {/* Back Button */}
-          <Link
-            href="/"
-            className="absolute top-4 left-4 z-10 flex items-center gap-2 text-foreground/80 hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="font-medium">Back</span>
-          </Link>
-
-        {/* Content Overlay */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
-          <div className="max-w-7xl mx-auto">
-            <span className="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-3">
-              {comic.genre}
-            </span>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 max-w-3xl leading-tight">
-              {comic.title}
-            </h1>
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <span className="font-medium">{comic.author}</span>
-              {comic.artist && (
-                <>
-                  <span>,</span>
-                  <span>{comic.artist}</span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Episode List */}
-          <div className="lg:col-span-2">
-            <EpisodeList episodes={comic.episodes} comicSlug={comic.slug} />
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Stats */}
-            <div className="flex items-center gap-6 mb-8 bg-secondary/30 p-4 rounded-2xl">
-              <div className="flex items-center gap-2">
-                <Eye className="w-5 h-5 text-muted-foreground" />
-                <span className="font-bold">{comic.views}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
-                <span className="font-bold">{comic.subscribers}</span>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="mb-8">
-              <h3 className="text-lg font-bold mb-3">About</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {comic.description}
-              </p>
-            </div>
-
-            {/* Actions */}
-            <div className="space-y-3">
-              <Link href={`/comic/${comic.slug}/episode/1`} className="block">
-                <Button className="w-full h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
-                  Read First Episode
-                  <ChevronRight className="w-5 h-5 ml-1" />
-                </Button>
+          {/* Header/Nav Wrapper inside container to avoid sát màn hình */}
+          <div className="absolute top-0 left-0 right-0 z-20">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/10"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                <span className="font-semibold text-sm">Back</span>
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-        <Footer />
+          {/* Content Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <span className="inline-block px-4 py-1.5 text-xs font-bold tracking-widest uppercase text-white bg-primary rounded-full mb-4 shadow-lg shadow-primary/20">
+                {comic.genre}
+              </span>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 max-w-3xl leading-tight">
+                {comic.title}
+              </h1>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span className="font-medium">{comic.author}</span>
+                {comic.artist && (
+                  <>
+                    <span>,</span>
+                    <span>{comic.artist}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Episode List */}
+            <div className="lg:col-span-2">
+              <EpisodeList episodes={comic.episodes} comicSlug={comic.slug} />
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:col-span-1">
+              {/* Stats */}
+              <div className="flex items-center gap-6 mb-8 bg-secondary/30 p-4 rounded-2xl">
+                <div className="flex items-center gap-2">
+                  <Eye className="w-5 h-5 text-muted-foreground" />
+                  <span className="font-bold">{comic.views}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-primary" />
+                  <span className="font-bold">{comic.subscribers}</span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold mb-3">About</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {comic.description}
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="space-y-3">
+                <Link href={`/comic/${comic.slug}/episode/1`} className="block">
+                  <Button className="w-full h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
+                    Read First Episode
+                    <ChevronRight className="w-5 h-5 ml-1" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

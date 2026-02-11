@@ -21,7 +21,7 @@ export const EpisodeNavigation = ({
 }: EpisodeNavigationProps) => {
   return (
     <div className="sticky bottom-0 bg-background border-t border-border">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {hasPrevEpisode ? (
             <Link href={`/comic/${slug}/episode/${currentEpisode - 1}`}>

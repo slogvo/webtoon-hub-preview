@@ -17,7 +17,7 @@ export const EpisodeEndActions = ({
 }: EpisodeEndActionsProps) => {
   return (
     <div className="bg-background py-8 border-t border-border">
-      <div className="container mx-auto px-4 max-w-xl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-4">
           <h3 className="text-lg font-semibold">
             End of Episode {currentEpisode}

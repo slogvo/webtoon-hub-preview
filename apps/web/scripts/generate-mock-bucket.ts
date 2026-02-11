@@ -48,22 +48,23 @@ function copyImage(srcPath: string, destPath: string) {
 // --- Data ---
 
 const seriesList = [
-  {
-    id: "dragon-sword",
-    status: "ongoing",
-    genres: ["Action", "Fantasy"],
-    locales: ["vi", "en"],
-    cover: "cover-hash-1.jpg",
-    publishAt: "2026-02-01T10:00:00Z",
-  },
-  {
-    id: "moon-hunter",
-    status: "completed",
-    genres: ["Action"],
-    locales: ["vi"],
-    cover: "cover-hash-2.jpg",
-    publishAt: "2025-11-15T00:00:00Z",
-  },
+  { id: "dragon-sword", status: "ongoing", genres: ["Action", "Fantasy"], locales: ["vi", "en"], cover: "comic-4.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "empires-greatest-villainess", status: "ongoing", genres: ["Romance"], locales: ["vi", "en"], cover: "webtoon-cover.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "eat-before-you-go", status: "ongoing", genres: ["Fantasy"], locales: ["en"], cover: "comic-1.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "special-civil-servant", status: "ongoing", genres: ["Action"], locales: ["en"], cover: "comic-2.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "trapped", status: "ongoing", genres: ["Thriller"], locales: ["en"], cover: "comic-3.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "killer-peter", status: "ongoing", genres: ["Action"], locales: ["en"], cover: "comic-4.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "white-tower-mage", status: "ongoing", genres: ["Fantasy"], locales: ["en"], cover: "comic-5.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "fake-bonds", status: "ongoing", genres: ["Romance"], locales: ["en"], cover: "comic-6.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "leveling-up-with-the-gods", status: "ongoing", genres: ["Action"], locales: ["en"], cover: "comic-7.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "omniscient-readers-viewpoint", status: "ongoing", genres: ["Fantasy"], locales: ["en"], cover: "comic-8.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "tower-of-god", status: "ongoing", genres: ["Fantasy"], locales: ["en"], cover: "comic-9.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "solo-leveling", status: "ongoing", genres: ["Action"], locales: ["en"], cover: "comic-10.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "lookism", status: "ongoing", genres: ["Drama"], locales: ["en"], cover: "comic-1.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "goddess-of-healing", status: "ongoing", genres: ["Romance"], locales: ["en"], cover: "comic-2.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "urban-shadow", status: "ongoing", genres: ["Thriller"], locales: ["en"], cover: "comic-3.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "virtual-reality", status: "ongoing", genres: ["Action"], locales: ["en"], cover: "comic-4.jpg", publishAt: "2026-02-01T10:00:00Z" },
+  { id: "moon-hunter", status: "completed", genres: ["Action"], locales: ["vi"], cover: "comic-8.jpg", publishAt: "2025-11-15T00:00:00Z" },
 ];
 
 // 1. Create index.json

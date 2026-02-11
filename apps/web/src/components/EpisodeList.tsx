@@ -19,24 +19,25 @@ const EpisodeList = ({ episodes, comicSlug }: EpisodeListProps) => {
           className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors border-b border-border group"
         >
           {/* Thumbnail */}
-          <div className="flex-shrink-0 w-20 h-14 rounded overflow-hidden relative">
+          <div className="shrink-0 w-20 h-14 rounded overflow-hidden relative">
             <Image
               src={episode.thumbnail}
               alt={episode.title}
               fill
+              sizes="80px"
               className="object-cover group-hover:scale-105 transition-transform"
             />
           </div>
 
           {/* Info */}
-          <div className="flex-grow min-w-0">
+          <div className="grow min-w-0">
             <h3 className="font-medium text-foreground truncate">
               Ep. {episode.number} - {episode.title}
             </h3>
           </div>
 
           {/* Meta */}
-          <div className="flex-shrink-0 text-right">
+          <div className="shrink-0 text-right">
             <p className="text-sm text-muted-foreground">
               {episode.date.includes('T') ? format(new Date(episode.date), "MMM dd, yyyy") : episode.date}
             </p>
@@ -47,7 +48,7 @@ const EpisodeList = ({ episodes, comicSlug }: EpisodeListProps) => {
           </div>
 
           {/* Episode Number */}
-          <div className="flex-shrink-0 text-muted-foreground font-medium">
+          <div className="shrink-0 text-muted-foreground font-medium">
             #{episode.number}
           </div>
         </Link>

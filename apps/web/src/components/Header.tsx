@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Search, Menu, X, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const SCROLL_THRESHOLD = 50;
 
@@ -59,10 +59,11 @@ const Header = () => {
       className={cn(
         "fixed top-0 right-0 left-0 z-50 w-full transition-all duration-300",
         isScrolled ? "backdrop-blur-xl bg-background/80" : "bg-transparent",
-        isHidden ? "-translate-y-full" : "translate-y-0"
+        isHidden ? "-translate-y-full" : "translate-y-0",
+        "global-header"
       )}
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between lg:h-[84px]">
           {/* Logo (Left) */}
           <div className="flex flex-1 items-center justify-start">
@@ -71,14 +72,16 @@ const Header = () => {
               className="flex shrink-0 cursor-pointer items-center gap-2.5"
               aria-label="4HumAI - Home"
             >
-              <Image
-                src="/horizontal-logo.svg"
-                alt="4HumAI Logo"
-                width={129}
-                height={44}
-                className="h-11 rounded-xl invert dark:invert-0"
-                priority
-              />
+              <span 
+                className="inline-block transition-all duration-300"
+                style={{ filter: mounted && theme === 'light' ? 'invert(1)' : 'none' }}
+              >
+                <img
+                  src="/horizontal-logo.svg"
+                  alt="4HumAI Logo"
+                  className="h-11"
+                />
+              </span>
             </Link>
           </div>
 
@@ -89,7 +92,7 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search series or creators..."
-                className="w-full bg-secondary border border-border rounded-full py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-hidden focus:ring-1 focus:ring-primary focus:bg-background transition-all"
+                className="w-full bg-foreground/5 border-none rounded-full py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-foreground/10 transition-all font-medium"
               />
             </div>
           </div>
@@ -99,22 +102,26 @@ const Header = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="rounded-full px-5 font-semibold"
+              className="rounded-full px-5 font-bold text-foreground/80 hover:text-foreground hover:bg-muted transition-all duration-200 focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               Log In
             </Button>
 
-            {mounted && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full text-foreground/70 hover:bg-foreground/5 hover:text-foreground"
-                aria-label="Toggle theme"
-                onClick={toggleTheme}
-              >
-                {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher />
+              
+              {mounted && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full text-foreground/70 hover:bg-muted hover:text-foreground h-9 w-9 transition-all duration-200 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  aria-label="Toggle theme"
+                  onClick={toggleTheme}
+                >
+                  {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+                </Button>
+              )}
+            </div>
 
             {/* Mobile Menu Button */}
             <Button
