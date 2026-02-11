@@ -1,0 +1,8 @@
+{
+  "episodeId": "ep-005",
+  "episodeNumber": 5,
+  "publishAt": "2025-11-15T00:00:00Z",
+  "access": {
+    "type": "time-locked"
+  }
+}

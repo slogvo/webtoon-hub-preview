@@ -1,0 +1,18 @@
+{
+  "seriesId": "moon-hunter",
+  "status": "completed",
+  "genres": [
+    "Action"
+  ],
+  "locales": [
+    "vi"
+  ],
+  "cover": "cover-hash-2.jpg",
+  "thumbnails": [
+    {
+      "index": 1,
+      "hash": "thumb-hash-1.jpg"
+    }
+  ],
+  "publishAt": "2025-11-15T00:00:00Z"
+}

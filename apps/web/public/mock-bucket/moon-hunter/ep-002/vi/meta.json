@@ -1,0 +1,27 @@
+{
+  "locale": "vi",
+  "title": "moon-hunter - Tập 2 (vi)",
+  "synopsis": "Tóm tắt nội dung tập 2 bằng tiếng vi...",
+  "panels": [
+    {
+      "index": 1,
+      "hash": "panel-moon-hunter-ep-002-vi-1.jpg"
+    },
+    {
+      "index": 2,
+      "hash": "panel-moon-hunter-ep-002-vi-2.jpg"
+    },
+    {
+      "index": 3,
+      "hash": "panel-moon-hunter-ep-002-vi-3.jpg"
+    },
+    {
+      "index": 4,
+      "hash": "panel-moon-hunter-ep-002-vi-4.jpg"
+    },
+    {
+      "index": 5,
+      "hash": "panel-moon-hunter-ep-002-vi-5.jpg"
+    }
+  ]
+}
