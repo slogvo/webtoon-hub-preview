@@ -6,14 +6,17 @@ import { Button } from "@/components/ui/button";
 import { useScrollDirection } from "@/hooks/use-scroll-direction";
 import { cn } from "@/lib/utils";
 
+import { useEpisodeInteraction } from "@/hooks/use-episode-interaction";
+
 interface EpisodeHeaderProps {
   slug: string;
   comic: { title: string };
-  episode: { number: number; title: string };
+  episode: { number: number; title: string; id: string };
 }
 
 export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
   const { isVisible } = useScrollDirection();
+  const { isLiked, toggleLike, handleShare } = useEpisodeInteraction(slug, episode.id.toString());
 
   return (
     <header 
@@ -25,7 +28,7 @@ export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Left */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Link
               href={`/comic/${slug}`}
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
@@ -43,14 +46,19 @@ export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
           </div>
 
           {/* Right */}
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              <Heart className="w-5 h-5" />
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleLike}
+              className={cn("transition-colors", isLiked && "text-red-500 hover:text-red-600")}
+            >
+              <Heart className={cn("w-5 h-5", isLiked && "fill-current")} />
             </Button>
             <Button variant="ghost" size="icon">
               <MessageSquare className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={handleShare}>
               <Share2 className="w-5 h-5" />
             </Button>
           </div>

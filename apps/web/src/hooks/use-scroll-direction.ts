@@ -1,43 +1,58 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 export function useScrollDirection() {
-  const [scrollDirection, setScrollDirection] = useState<"up" | "down" | null>(null);
-  const [prevScrollY, setPrevScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  
+  // Use refs for tracking scroll state to avoid re-renders on every scroll event
+  const prevScrollY = useRef(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const resetTimer = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    // Auto-hide after 3 seconds of inactivity (reduced from 5s for better UX)
+    timeoutRef.current = setTimeout(() => {
+        setIsVisible(false);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const direction = currentScrollY > prevScrollY ? "down" : "up";
+      const direction = currentScrollY > prevScrollY.current ? "down" : "up";
 
-      if (
-        direction !== scrollDirection &&
-        Math.abs(currentScrollY - prevScrollY) > 10 // Threshold to avoid jitter
-      ) {
-        setScrollDirection(direction);
+      // Threshold to avoid jitter on small scroll movements
+      if (Math.abs(currentScrollY - prevScrollY.current) > 10) {
+        if (currentScrollY < 50) {
+           // At top, always show
+           setIsVisible(true);
+           if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        } else if (direction === "down") {
+           // Scrolling down, hide immediately
+           setIsVisible(false);
+           if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        } else if (direction === "up") {
+           // Scrolling up, show temporarily
+           setIsVisible(true);
+           // Start/Reset idle timer
+           resetTimer();
+        }
       }
 
-      // Hide if scrolling down and not at the top
-      // Show if scrolling up or at the top
-      if (currentScrollY < 50) {
-         setIsVisible(true);
-      } else if (direction === "down") {
-         setIsVisible(false);
-      } else if (direction === "up") {
-         setIsVisible(true);
-      }
-
-      setPrevScrollY(currentScrollY);
+      prevScrollY.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [scrollDirection, prevScrollY]);
+  }, [resetTimer]); // Dependency array minimal, won't re-run on scroll
 
-  return { scrollDirection, isVisible };
+  return { isVisible };
 }

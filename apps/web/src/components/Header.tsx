@@ -2,16 +2,14 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Search, Menu, X, Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const SCROLL_THRESHOLD = 50;
 
 const Header = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -136,26 +134,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <div
-          className={cn(
-            "lg:hidden overflow-hidden transition-all duration-300 ease-in-out",
-            isMobileMenuOpen ? "max-h-96 pb-6" : "max-h-0"
-          )}
-        >
-          <div className="flex flex-col gap-4 pt-4 border-t border-border/50">
-            {/* <div className="relative group px-2">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-full bg-secondary/50 border border-border rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:ring-1 focus:ring-primary focus:bg-background"
-              />
-            </div>
-            <div className="flex gap-2 px-2 pt-2">
-              <Button className="flex-1 rounded-full">Log In</Button>
-            </div> */}
-          </div>
-        </div>
+
       </div>
     </header>
   );

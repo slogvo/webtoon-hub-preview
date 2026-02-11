@@ -115,6 +115,7 @@ export default async function EpisodeViewerPage({ params }: PageProps) {
     number: episodeIndex + 1,
     date: episodeMeta.publishAt || seriesMeta.publishAt,
     panels: panels,
+    id: episodeId, 
   };
 
   return (

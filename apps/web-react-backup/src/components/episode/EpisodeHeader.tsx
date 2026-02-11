@@ -15,7 +15,7 @@ export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-14">
           {/* Left */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Link
               to={`/comic/${slug}`}
               className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
@@ -33,7 +33,7 @@ export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
           </div>
 
           {/* Right */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <Button variant="ghost" size="icon">
               <Heart className="w-5 h-5" />
             </Button>

@@ -38,15 +38,30 @@ const EpisodeList = ({ episodes, comicId }: EpisodeListProps) => {
             />
           </div>
 
-          {/* Info */}
-          <div className="grow min-w-0">
-            <h3 className="font-medium text-foreground truncate">
+          {/* Info & Meta (Mobile) - Stacked Layout */}
+          <div className="flex flex-col justify-center gap-1 min-w-0 grow sm:hidden">
+            <h3 className="font-medium text-foreground line-clamp-2 text-sm leading-tight group-hover:text-primary transition-colors">
+              {episode.title}
+            </h3>
+            <div className="flex items-center gap-3 text-xs text-muted-foreground">
+              <span>{episode.date ? format(parseISO(episode.date), "MMM dd, yyyy") : "N/A"}</span>
+              <span className="flex items-center gap-1">
+                <Heart className="w-3 h-3" />
+                {episode.likes.toLocaleString()}
+              </span>
+              <span className="font-medium text-foreground/70">#{episode.number}</span>
+            </div>
+          </div>
+
+          {/* Info (Desktop) - Horizontal Layout */}
+          <div className="hidden sm:block grow min-w-0">
+            <h3 className="font-medium text-foreground truncate group-hover:text-primary transition-colors">
               {episode.title}
             </h3>
           </div>
 
-          {/* Meta */}
-          <div className="shrink-0 text-right">
+          {/* Meta (Desktop) */}
+          <div className="hidden sm:block shrink-0 text-right">
             <p className="text-sm text-muted-foreground">
               {episode.date ? format(parseISO(episode.date), "MMM dd, yyyy") : "N/A"}
             </p>
@@ -56,8 +71,8 @@ const EpisodeList = ({ episodes, comicId }: EpisodeListProps) => {
             </div>
           </div>
 
-          {/* Episode Number */}
-          <div className="shrink-0 text-muted-foreground font-medium">
+          {/* Episode Number (Desktop) */}
+          <div className="hidden sm:block shrink-0 text-muted-foreground font-medium">
             #{episode.number}
           </div>
         </Link>

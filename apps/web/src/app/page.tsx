@@ -1,6 +1,6 @@
 import TrendingSection from "@/components/TrendingSection";
 import CategorySection from "@/components/CategorySection";
-import DailySchedule from "@/components/DailySchedule";
+// import DailySchedule from "@/components/DailySchedule";
 import { AssetClient } from "@/lib/bucket/client";
 import { Metadata } from "next";
 
