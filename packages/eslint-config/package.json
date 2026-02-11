@@ -1,0 +1,12 @@
+{
+  "name": "@webtoon-hub/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^9.32.0",
+    "globals": "^15.15.0",
+    "@eslint/js": "^9.32.0"
+  }
+}

@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build
+        run: bunx turbo build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: "https://your-project.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "your-anon-key"
+          NEXT_PUBLIC_BUCKET_URL: "/mock-bucket"
+
+      - name: Deploy
+        run: echo "Deploy step placeholder"
