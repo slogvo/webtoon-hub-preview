@@ -78,7 +78,15 @@ Status: ✅ Done
 - [x] Refine Detail Page Skeleton to match UI ✅
 - [x] /verification-and-push (Final Work) ✅ [21:00]
 
+## Phase 11: Interactive Features & Verification ✅
+
+- [x] Implement Immersive Reading Mode (Auto-hide Header/Nav) ✅
+- [x] Integrate Like/Share Functionality (localStorage/Web Share) ✅
+- [x] Center Next Episode Button on Mobile ✅
+- [x] Resolve Lint Errors & Clean up Code ✅
+- [x] /verification-and-push (Interactive) ✅ [22:15]
+
 ---
 
 **Project Status:** ✅ Final Polish Complete
-**Completion Time:** 2026-02-11 21:00
+**Completion Time:** 2026-02-11 22:15

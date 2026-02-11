@@ -58,7 +58,7 @@ export const metadata: Metadata = {
       "Discover and read thousands of free digital comics, manga, and manhwa online.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "WEBTOON Hub - Read Free Comics Online",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     title: "WEBTOON - Read Free Digital Comics Online",
     description:
       "Discover and read thousands of free digital comics, manga, and manhwa online.",
-    images: ["/og-image.png"],
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,

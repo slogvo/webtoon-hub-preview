@@ -74,6 +74,7 @@ const Header = () => {
                 className="inline-block transition-all duration-300"
                 style={{ filter: mounted && theme === 'light' ? 'invert(1)' : 'none' }}
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/horizontal-logo.svg"
                   alt="4HumAI Logo"
