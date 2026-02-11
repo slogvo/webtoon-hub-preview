@@ -121,6 +121,7 @@
 | 23:30 | Build Success       | bun run build passes                                        |
 | 09:30 | Reverted Repo       | Reverted to `fb4b804` and force pushed                      |
 | 14:13 | Verification & Push | Successfully ran lint, build, and pushed monorepo structure |
+| 14:15 | Deployment Fix      | Added vercel.json to resolve "missing dist" error           |
 
 ---
 
