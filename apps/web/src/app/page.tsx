@@ -1,5 +1,4 @@
 import TrendingSection from "@/components/TrendingSection";
-import PromoBanner from "@/components/PromoBanner";
 import CategorySection from "@/components/CategorySection";
 import NewOnWebtoon from "@/components/NewOnWebtoon";
 import DailySchedule from "@/components/DailySchedule";
@@ -42,7 +41,6 @@ export default function HomePage() {
 
       <div className="flex flex-col gap-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <TrendingSection />
-        <PromoBanner />
         <CategorySection />
         <NewOnWebtoon />
         <DailySchedule />
