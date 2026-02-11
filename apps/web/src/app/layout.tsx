@@ -1,23 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Funnel_Sans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
 import "./globals.css";
 
-const notoSans = Noto_Sans({
-  variable: "--font-noto-sans",
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "600", "700", "800"],
+const funnelSans = Funnel_Sans({
+  variable: "--font-funnel-sans",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
 // ===== SEO Metadata (Next.js Metadata API) =====
 export const metadata: Metadata = {
   title: {
-    default: "WEBTOON - Read Free Digital Comics Online",
-    template: "%s | WEBTOON",
+    default: "4HumAI - AI for Humanity",
+    template: "%s | 4HumAI",
   },
   description:
     "Discover and read thousands of free digital comics, manga, and manhwa online. WEBTOON offers the best storytelling experience with daily updates from top creators worldwide.",
@@ -104,10 +104,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${notoSans.variable} font-sans antialiased`}>
+      <body className={`${funnelSans.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
