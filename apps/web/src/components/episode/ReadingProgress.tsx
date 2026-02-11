@@ -62,7 +62,7 @@ export const ReadingProgress = ({
   }, [currentIndex, storageKey]);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center justify-center pointer-events-none">
+    <div className="fixed bottom-20 right-6 z-50 flex items-center justify-center pointer-events-none">
       <div className="bg-background/80 backdrop-blur-md border border-border shadow-lg px-4 py-2 rounded-full text-xs font-semibold tabular-nums text-foreground/80 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
         <span className="text-primary">{currentIndex}</span>
         <span className="opacity-40">/</span>
