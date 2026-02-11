@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://webtoon-hub.com",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://webtoon-hub-preview.vercel.app",
   ),
   alternates: {
     canonical: "/",
