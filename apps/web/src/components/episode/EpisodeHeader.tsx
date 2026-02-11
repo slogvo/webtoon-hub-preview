@@ -3,6 +3,9 @@
 import Link from "next/link";
 import { ArrowLeft, Heart, MessageSquare, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScrollDirection } from "@/hooks/use-scroll-direction";
+import { cn } from "@/lib/utils";
+
 interface EpisodeHeaderProps {
   slug: string;
   comic: { title: string };
@@ -10,8 +13,15 @@ interface EpisodeHeaderProps {
 }
 
 export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {
+  const { isVisible } = useScrollDirection();
+
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+    <header 
+      className={cn(
+        "sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border transition-transform duration-300 ease-in-out",
+        !isVisible && "-translate-y-full"
+      )}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14">
           {/* Left */}
