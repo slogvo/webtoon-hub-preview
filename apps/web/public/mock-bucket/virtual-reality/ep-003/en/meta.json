@@ -1,0 +1,27 @@
+{
+  "locale": "en",
+  "title": "virtual-reality - Tập 3 (en)",
+  "synopsis": "Tóm tắt nội dung tập 3 bằng tiếng en...",
+  "panels": [
+    {
+      "index": 1,
+      "hash": "panel-virtual-reality-ep-003-en-1.jpg"
+    },
+    {
+      "index": 2,
+      "hash": "panel-virtual-reality-ep-003-en-2.jpg"
+    },
+    {
+      "index": 3,
+      "hash": "panel-virtual-reality-ep-003-en-3.jpg"
+    },
+    {
+      "index": 4,
+      "hash": "panel-virtual-reality-ep-003-en-4.jpg"
+    },
+    {
+      "index": 5,
+      "hash": "panel-virtual-reality-ep-003-en-5.jpg"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "locale": "en",
+  "title": "omniscient-readers-viewpoint - Tập 1 (en)",
+  "synopsis": "Tóm tắt nội dung tập 1 bằng tiếng en...",
+  "panels": [
+    {
+      "index": 1,
+      "hash": "panel-omniscient-readers-viewpoint-ep-001-en-1.jpg"
+    },
+    {
+      "index": 2,
+      "hash": "panel-omniscient-readers-viewpoint-ep-001-en-2.jpg"
+    },
+    {
+      "index": 3,
+      "hash": "panel-omniscient-readers-viewpoint-ep-001-en-3.jpg"
+    },
+    {
+      "index": 4,
+      "hash": "panel-omniscient-readers-viewpoint-ep-001-en-4.jpg"
+    },
+    {
+      "index": 5,
+      "hash": "panel-omniscient-readers-viewpoint-ep-001-en-5.jpg"
+    }
+  ]
+}

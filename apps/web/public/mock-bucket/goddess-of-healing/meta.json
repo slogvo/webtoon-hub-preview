@@ -1,1 +1,18 @@
-{"seriesId": "goddess-of-healing", "status": "ongoing", "genres": ["Webtoon"], "locales": ["en"], "cover": "comic-1.jpg", "thumbnails": [{"index": 1, "hash": "thumb-hash-1.jpg"}], "publishAt": "2026-02-01T10:00:00Z"}
+{
+  "seriesId": "goddess-of-healing",
+  "status": "ongoing",
+  "genres": [
+    "Romance"
+  ],
+  "locales": [
+    "en"
+  ],
+  "cover": "comic-2.jpg",
+  "thumbnails": [
+    {
+      "index": 1,
+      "hash": "thumb-hash-1.jpg"
+    }
+  ],
+  "publishAt": "2026-02-01T10:00:00Z"
+}

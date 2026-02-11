@@ -1,1 +1,19 @@
-{"seriesId": "empires-greatest-villainess", "status": "ongoing", "genres": ["Romance"], "locales": ["en"], "cover": "webtoon-cover.jpg", "thumbnails": [{"index": 1, "hash": "thumb-hash-1.jpg"}], "publishAt": "2026-02-01T10:00:00Z"}
+{
+  "seriesId": "empires-greatest-villainess",
+  "status": "ongoing",
+  "genres": [
+    "Romance"
+  ],
+  "locales": [
+    "vi",
+    "en"
+  ],
+  "cover": "webtoon-cover.jpg",
+  "thumbnails": [
+    {
+      "index": 1,
+      "hash": "thumb-hash-1.jpg"
+    }
+  ],
+  "publishAt": "2026-02-01T10:00:00Z"
+}

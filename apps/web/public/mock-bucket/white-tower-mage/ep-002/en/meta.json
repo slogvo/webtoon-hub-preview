@@ -1,0 +1,27 @@
+{
+  "locale": "en",
+  "title": "white-tower-mage - Tập 2 (en)",
+  "synopsis": "Tóm tắt nội dung tập 2 bằng tiếng en...",
+  "panels": [
+    {
+      "index": 1,
+      "hash": "panel-white-tower-mage-ep-002-en-1.jpg"
+    },
+    {
+      "index": 2,
+      "hash": "panel-white-tower-mage-ep-002-en-2.jpg"
+    },
+    {
+      "index": 3,
+      "hash": "panel-white-tower-mage-ep-002-en-3.jpg"
+    },
+    {
+      "index": 4,
+      "hash": "panel-white-tower-mage-ep-002-en-4.jpg"
+    },
+    {
+      "index": 5,
+      "hash": "panel-white-tower-mage-ep-002-en-5.jpg"
+    }
+  ]
+}

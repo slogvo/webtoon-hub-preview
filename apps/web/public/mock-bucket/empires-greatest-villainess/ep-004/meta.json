@@ -1,0 +1,8 @@
+{
+  "episodeId": "ep-004",
+  "episodeNumber": 4,
+  "publishAt": "2026-02-01T10:00:00Z",
+  "access": {
+    "type": "time-locked"
+  }
+}
