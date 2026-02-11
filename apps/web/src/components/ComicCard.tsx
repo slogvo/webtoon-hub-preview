@@ -1,41 +1,43 @@
 import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
 import { ArrowUp, ArrowDown } from "lucide-react";
 
-type ImageSrc = string | StaticImageData;
+import { AssetClient } from "@/lib/bucket/client";
+import { SmartImage } from "./SmartImage";
 
 interface ComicCardProps {
   rank?: number;
   title: string;
-  genre: string;
-  image: ImageSrc;
+  genres: string[];
+  cover: string;
   rankChange?: number;
   isNew?: boolean;
-  slug?: string;
+  id?: string;
   priority?: boolean;
 }
 
 const ComicCard = ({
   rank,
   title,
-  genre,
-  image,
+  genres,
+  cover,
   rankChange,
   isNew,
-  slug,
+  id,
   priority,
 }: ComicCardProps) => {
+  const imageUrl = typeof cover === "string" ? AssetClient.getImageUrl(cover) : cover;
+  const genreLabel = genres && genres.length > 0 ? genres[0] : "";
   const content = (
     <>
       <div className="relative">
-        <Image
-          src={image}
+        <SmartImage
+          src={imageUrl}
           alt={title}
           width={176}
           height={235}
-          className="comic-card-image rounded-lg"
-          style={{ height: "auto" }}
+          className="comic-card-image rounded-lg object-cover aspect-3/4"
           priority={priority}
+          unoptimized
         />
 
         {isNew && <span className="new-badge">New Episode</span>}
@@ -66,15 +68,15 @@ const ComicCard = ({
             </span>
           )}
         </div>
-        <p className="text-xs text-muted-foreground">{genre}</p>
+        <p className="text-xs text-muted-foreground">{genreLabel}</p>
       </div>
     </>
   );
 
-  if (slug) {
+  if (id) {
     return (
       <Link
-        href={`/comic/${slug}`}
+        href={`/comic/${id}`}
         className="comic-card shrink-0 group block cursor-pointer"
       >
         {content}

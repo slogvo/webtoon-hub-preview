@@ -11,19 +11,18 @@ import {
 import { Button } from "@/components/ui/button";
 import EpisodeList from "@/components/EpisodeList";
 import { SeriesMeta } from "@/lib/bucket/types";
-import { format } from "date-fns";
-import { comics } from "@/data/mockData";
+import { SmartImage } from "@/components/SmartImage";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 // Helper to get series data with error handling
-async function getSeriesData(slug: string): Promise<SeriesMeta | null> {
+async function getSeriesData(seriesId: string): Promise<SeriesMeta | null> {
   try {
-    return await AssetClient.getSeriesMeta(slug);
+    return await AssetClient.getSeriesMeta(seriesId);
   } catch (e) {
-    console.error(`Failed to fetch series: ${slug}`, e);
+    console.error(`Failed to fetch series: ${seriesId}`, e);
     return null;
   }
 }
@@ -32,8 +31,8 @@ async function getSeriesData(slug: string): Promise<SeriesMeta | null> {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const seriesMeta = await getSeriesData(slug);
+  const { slug: seriesId } = await params;
+  const seriesMeta = await getSeriesData(seriesId);
 
   if (!seriesMeta) {
     return {
@@ -41,13 +40,9 @@ export async function generateMetadata({
     };
   }
 
-  // TODO: Fetch title from LocaleMeta. For now using ID
-  const title = seriesMeta.seriesId;
+  const title = seriesMeta.title || seriesMeta.seriesId.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
   const description = `Read ${title} online.`;
-  const coverUrl = AssetClient.getCoverUrl(
-    seriesMeta.seriesId,
-    seriesMeta.cover,
-  );
+  const coverUrl = AssetClient.getImageUrl(seriesMeta.cover);
 
   return {
     title: title,
@@ -56,7 +51,7 @@ export async function generateMetadata({
       type: "article",
       title: title,
       description: description,
-      url: `/comic/${slug}`,
+      url: `/comic/${seriesId}`,
       siteName: "WEBTOON Hub",
       images: [
         {
@@ -79,11 +74,8 @@ export async function generateMetadata({
 // JSON-LD for Comic Series
 function getComicJsonLd(seriesMeta: SeriesMeta) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://webtoon-hub.com";
-  const title = seriesMeta.seriesId; // Placeholder
-  const coverUrl = AssetClient.getCoverUrl(
-    seriesMeta.seriesId,
-    seriesMeta.cover,
-  );
+  const title = seriesMeta.title || seriesMeta.seriesId.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  const coverUrl = AssetClient.getImageUrl(seriesMeta.cover);
 
   return {
     "@context": "https://schema.org",
@@ -95,65 +87,46 @@ function getComicJsonLd(seriesMeta: SeriesMeta) {
       "@type": "Organization",
       name: "WEBTOON Hub",
     },
-    // We don't have episode count easily accessible here without fetching more data
-    // numberOfEpisodes: ...
   };
 }
 
 export default async function ComicDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const seriesMeta = await getSeriesData(slug);
+  const { slug: seriesId } = await params;
+  const seriesMeta = await getSeriesData(seriesId);
 
   if (!seriesMeta) {
     notFound();
   }
 
-  const mockSeries = comics.find(c => c.slug === seriesMeta.seriesId);
+  const coverUrl = AssetClient.getImageUrl(seriesMeta.cover);
+  const title = seriesMeta.title || seriesMeta.seriesId.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase());
 
-  const coverUrl = AssetClient.getCoverUrl(
-    seriesMeta.seriesId,
-    seriesMeta.cover,
-  );
-
-  const defaultLocale = seriesMeta.locales[0] || "en";
-
-  const episodesCount = mockSeries ? mockSeries.episodes.length : 5;
-  const episodes = Array.from({ length: episodesCount }, (_, i) => {
-    const episodeId = `ep-${String(i + 1).padStart(3, "0")}`;
-    // Using the first panel of each episode as an automatic thumbnail for better variety
-    const panelHash = `panel-${seriesMeta.seriesId}-${episodeId}-${defaultLocale}-1.jpg`;
-
+  const episodes = (seriesMeta.episodes || []).map((ep, i) => {
     return {
-      id: episodeId,
-      title: mockSeries?.episodes[i]?.title || `Episode ${i + 1}`,
+      id: ep.episodeId,
+      title: ep.title || ep.episodeId.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
       number: i + 1,
-      date: seriesMeta.publishAt ? format(new Date(seriesMeta.publishAt), "MMM dd, yyyy") : "N/A",
-      thumbnail: AssetClient.getPanelUrl(
-        seriesMeta.seriesId,
-        episodeId,
-        defaultLocale,
-        panelHash,
-      ),
-      likes: mockSeries?.episodes[i]?.likes || 0,
-      panels: [],
+      date: seriesMeta.publishAt || "",
+      thumbnail: coverUrl, // Using cover as thumbnail fallback for list
+      likes: 0,
     };
   });
 
   const comic = {
-    slug: seriesMeta.seriesId,
-    title: mockSeries?.title || seriesMeta.seriesId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-    description: mockSeries?.description || "In a world of constant change, one warrior stands alone against the darkness. This epic journey explores themes of courage, sacrifice, and the search for truth.",
-    author: mockSeries?.author || "Unknown Author",
-    genre: seriesMeta.genres[0],
+    seriesId: seriesMeta.seriesId,
+    title: title,
+    description: seriesMeta.description || "Discover this amazing story on WEBTOON Hub. Follow the journey of characters as they navigate through challenges and adventures.",
+    author: seriesMeta.author || "Original Author",
+    genre: seriesMeta.genres[0] || "Webtoon",
     status: seriesMeta.status,
-    updateDay: mockSeries?.updateDay || "Monday",
-    views: mockSeries?.views || "1.2M",
-    subscribers: mockSeries?.subscribers || "100K",
-    rating: mockSeries?.rating || 9.8,
+    updateDay: "Daily",
+    views: "1.2M",
+    subscribers: "100K",
+    rating: 9.8,
     banner: coverUrl,
     thumbnail: coverUrl,
     episodes: episodes,
-    artist: mockSeries?.artist || "Unknown Artist",
+    artist: seriesMeta.artist || "Original Artist",
   };
 
   return (
@@ -167,11 +140,13 @@ export default async function ComicDetailPage({ params }: PageProps) {
 
       <div className="pb-20">
         <div className="relative h-[400px] overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${coverUrl})`,
-            }}
+          <SmartImage
+            src={coverUrl}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
+            unoptimized
           />
           <div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
 
@@ -215,7 +190,7 @@ export default async function ComicDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Episode List */}
             <div className="lg:col-span-2">
-              <EpisodeList episodes={comic.episodes} comicSlug={comic.slug} />
+              <EpisodeList episodes={comic.episodes} comicId={comic.seriesId} />
             </div>
 
             {/* Sidebar */}
@@ -242,12 +217,14 @@ export default async function ComicDetailPage({ params }: PageProps) {
 
               {/* Actions */}
               <div className="space-y-3">
-                <Link href={`/comic/${comic.slug}/episode/1`} className="block">
-                  <Button className="w-full h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
-                    Read First Episode
-                    <ChevronRight className="w-5 h-5 ml-1" />
-                  </Button>
-                </Link>
+                {comic.episodes.length > 0 && (
+                  <Link href={`/comic/${comic.seriesId}/episode/${comic.episodes[0].id}`} className="block">
+                    <Button className="w-full h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
+                      Read First Episode
+                      <ChevronRight className="w-5 h-5 ml-1" />
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

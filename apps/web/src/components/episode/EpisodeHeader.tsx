@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { ArrowLeft, Heart, MessageSquare, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Comic, Episode } from "@/data/mockData";
-
 interface EpisodeHeaderProps {
   slug: string;
-  comic: Comic;
-  episode: Episode;
+  comic: { title: string };
+  episode: { number: number; title: string };
 }
 
 export const EpisodeHeader = ({ slug, comic, episode }: EpisodeHeaderProps) => {

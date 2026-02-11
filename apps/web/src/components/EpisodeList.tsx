@@ -1,45 +1,54 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Heart } from "lucide-react";
-import { Episode } from "@/data/mockData";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { SmartImage } from "./SmartImage";
 
-interface EpisodeListProps {
-  episodes: Episode[];
-  comicSlug: string;
+export interface EpisodeListItem {
+  id: string;
+  title: string;
+  number: number;
+  date: string;
+  thumbnail: string;
+  likes: number;
 }
 
-const EpisodeList = ({ episodes, comicSlug }: EpisodeListProps) => {
+interface EpisodeListProps {
+  episodes: EpisodeListItem[];
+  comicId: string;
+}
+
+const EpisodeList = ({ episodes, comicId }: EpisodeListProps) => {
   return (
     <div className="space-y-0">
       {episodes.map((episode) => (
         <Link
           key={episode.id}
-          href={`/comic/${comicSlug}/episode/${episode.number}`}
+          href={`/comic/${comicId}/episode/${episode.id}`}
           className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors border-b border-border group"
         >
           {/* Thumbnail */}
-          <div className="shrink-0 w-20 h-14 rounded overflow-hidden relative">
-            <Image
+          <div className="shrink-0 w-20 h-14 rounded overflow-hidden relative bg-muted">
+            <SmartImage
               src={episode.thumbnail}
               alt={episode.title}
               fill
               sizes="80px"
               className="object-cover group-hover:scale-105 transition-transform"
+              unoptimized
             />
           </div>
 
           {/* Info */}
           <div className="grow min-w-0">
             <h3 className="font-medium text-foreground truncate">
-              Ep. {episode.number} - {episode.title}
+              {episode.title}
             </h3>
           </div>
 
           {/* Meta */}
           <div className="shrink-0 text-right">
             <p className="text-sm text-muted-foreground">
-              {episode.date.includes('T') ? format(new Date(episode.date), "MMM dd, yyyy") : episode.date}
+              {episode.date ? format(parseISO(episode.date), "MMM dd, yyyy") : "N/A"}
             </p>
             <div className="flex items-center justify-end gap-1 text-sm text-muted-foreground mt-1">
               <Heart className="w-3 h-3" />

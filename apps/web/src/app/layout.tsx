@@ -106,7 +106,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${funnelSans.variable} font-sans antialiased`}>
+      <body className={`${funnelSans.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -115,7 +115,7 @@ export default function RootLayout({
         >
           <QueryProvider>
             <TooltipProvider delayDuration={0}>
-              <div className="bg-background text-foreground min-h-screen transition-colors duration-300">
+              <div className="bg-background text-foreground min-h-screen transition-colors duration-300" suppressHydrationWarning>
                 <Header />
                 <div className="h-20 lg:h-[84px] header-spacer" />
                 <main>{children}</main>

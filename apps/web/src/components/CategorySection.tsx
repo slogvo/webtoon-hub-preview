@@ -2,33 +2,32 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { SeriesIndex } from "@/lib/bucket/types";
 import ComicCard from "./ComicCard";
-import { comics } from "@/data/mockData";
 import useEmblaCarousel from "embla-carousel-react";
 import { Button } from "@/components/ui/button";
 
 const categories = [
-  "Drama",
-  "Fantasy",
+  "Adventure",
   "Comedy",
+  "Crime",
+  "Drama",
+  "Mystery",
+  "Thriller",
+  "Fantasy",
   "Action",
   "Slice of life",
-  "Romance",
-  "Superhero",
-  "Sci-fi",
 ];
 
-const getComicsForCategory = (category: string) => {
-  return comics.map((comic, index) => ({
-    ...comic,
-    genre: category,
-    isNew: index % 3 === 1,
-  })).slice(0, 12);
-};
-
-const CategorySection = () => {
-  const [activeCategory, setActiveCategory] = useState("Drama");
-  const categoryComics = getComicsForCategory(activeCategory);
+const CategorySection = ({ series }: { series: SeriesIndex["series"] }) => {
+  const [activeCategory, setActiveCategory] = useState("Adventure");
+  
+  const categoryComics = series
+    .filter(item => item.genres.includes(activeCategory))
+    .map((item, index) => ({
+      ...item,
+      isNew: index % 3 === 1,
+    })).slice(0, 12);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -43,19 +42,24 @@ const CategorySection = () => {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback((emblaApi: any) => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrevBtnEnabled(emblaApi.canScrollPrev());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNextBtnEnabled(emblaApi.canScrollNext());
   }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    onSelect(emblaApi);
+    
+    // Defer initialization to avoid synchronous setState inside effect
+    Promise.resolve().then(() => onSelect(emblaApi));
+
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
-  }, [emblaApi, onSelect]);
+
+    return () => {
+      emblaApi.off("reInit", onSelect);
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi, onSelect, activeCategory]); // Reset on category change
 
   return (
     <section className="py-8">
@@ -89,14 +93,14 @@ const CategorySection = () => {
       <div className="relative group">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
-            {categoryComics.map((comic) => (
-              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
+            {categoryComics.map((item, index) => (
+              <div key={item.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
-                  title={comic.title}
-                  genre={comic.genre}
-                  image={comic.image}
-                  isNew={comic.isNew}
-                  slug={comic.slug}
+                  title={item.title || item.id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                  genres={item.genres}
+                  cover={item.cover}
+                  id={item.id}
+                  priority={index === 0}
                 />
               </div>
             ))}

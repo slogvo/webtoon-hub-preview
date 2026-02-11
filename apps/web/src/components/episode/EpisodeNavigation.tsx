@@ -6,25 +6,26 @@ import { Button } from "@/components/ui/button";
 
 interface EpisodeNavigationProps {
   slug: string;
-  currentEpisode: number;
+  currentEpisodeTitle: string;
+  currentEpisodeNumber: number;
   totalEpisodes: number;
-  hasPrevEpisode: boolean;
-  hasNextEpisode: boolean;
+  prevEpisodeId: string | null;
+  nextEpisodeId: string | null;
 }
 
 export const EpisodeNavigation = ({
   slug,
-  currentEpisode,
+  currentEpisodeNumber,
   totalEpisodes,
-  hasPrevEpisode,
-  hasNextEpisode,
-}: EpisodeNavigationProps) => {
+  prevEpisodeId,
+  nextEpisodeId,
+}: Omit<EpisodeNavigationProps, "currentEpisodeTitle">) => {
   return (
     <div className="sticky bottom-0 bg-background border-t border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {hasPrevEpisode ? (
-            <Link href={`/comic/${slug}/episode/${currentEpisode - 1}`}>
+          {prevEpisodeId ? (
+            <Link href={`/comic/${slug}/episode/${prevEpisodeId}`}>
               <Button variant="ghost" className="flex items-center gap-2">
                 <ChevronLeft className="w-5 h-5" />
                 <span className="hidden sm:inline">Previous</span>
@@ -41,14 +42,14 @@ export const EpisodeNavigation = ({
             </Button>
           )}
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 text-center">
             <span className="text-sm font-medium">
-              Episode {currentEpisode} of {totalEpisodes}
+              Episode {currentEpisodeNumber} of {totalEpisodes}
             </span>
           </div>
 
-          {hasNextEpisode ? (
-            <Link href={`/comic/${slug}/episode/${currentEpisode + 1}`}>
+          {nextEpisodeId ? (
+            <Link href={`/comic/${slug}/episode/${nextEpisodeId}`}>
               <Button variant="ghost" className="flex items-center gap-2">
                 <span className="hidden sm:inline">Next</span>
                 <ChevronRight className="w-5 h-5" />

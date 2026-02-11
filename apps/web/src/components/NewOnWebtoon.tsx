@@ -1,39 +1,24 @@
 import { ChevronRight } from "lucide-react";
 import ComicCard from "./ComicCard";
-import { AssetClient } from "@/lib/bucket/client";
 import Link from "next/link";
 
-interface ComicSummary {
-  id: string | number;
-  title: string;
-  genre: string;
-  image: string;
-  isNew: boolean;
-  slug: string;
+import { SeriesIndex } from "@/lib/bucket/types";
+
+interface NewOnWebtoonProps {
+  series: SeriesIndex["series"];
 }
 
-const NewOnWebtoon = async () => {
-  let comics: ComicSummary[] = [];
-
-  try {
-    const indexData = await AssetClient.getSeriesIndex();
-    // In real app: Sort by 'publishAt' descending
-    // For now: Just take all
-    comics = indexData.series.map((s) => ({
-      id: s.id,
-      title: s.id, // TODO: Localized title
-      genre: s.genres[0] || "Webtoon",
-      image: AssetClient.getCoverUrl(s.id, s.cover),
-      isNew: true, // Logic to determine 'new' based on date
-      slug: s.id,
-    }));
-  } catch (error) {
-    console.error("Failed to load NewOnWebtoon data", error);
-    // We could return null or a skeleton here
-  }
+const NewOnWebtoon = ({ series }: NewOnWebtoonProps) => {
+  const comics = series.map((s) => ({
+    id: s.id,
+    title: s.title || s.id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+    genres: s.genres,
+    cover: s.cover,
+    isNew: true,
+  }));
 
   if (comics.length === 0) {
-    return null; // Or empty state
+    return null;
   }
 
   return (
@@ -55,10 +40,10 @@ const NewOnWebtoon = async () => {
               <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
                   title={comic.title}
-                  genre={comic.genre}
-                  image={comic.image}
+                  genres={comic.genres}
+                  cover={comic.cover}
                   isNew={comic.isNew}
-                  slug={comic.slug}
+                  id={comic.id.toString()}
                   priority={index === 0}
                 />
               </div>

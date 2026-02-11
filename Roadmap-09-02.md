@@ -112,16 +112,17 @@
 
 ## 📝 Session Log
 
-| Time  | Event               | Notes                                                       |
-| ----- | ------------------- | ----------------------------------------------------------- |
-| 22:14 | Session started     | Reading project structure                                   |
-| 22:15 | Analysis complete   | 4 pages, ~15 components identified                          |
-| 23:00 | Build Fixes         | Resolved React 19 type errors                               |
-| 23:15 | Supabase Setup      | Added @supabase/ssr & middleware                            |
-| 23:30 | Build Success       | bun run build passes                                        |
-| 09:30 | Reverted Repo       | Reverted to `fb4b804` and force pushed                      |
-| 14:13 | Verification & Push | Successfully ran lint, build, and pushed monorepo structure |
-| 14:15 | Deployment Fix      | Added vercel.json to resolve "missing dist" error           |
+| Time  | Event               | Notes                                                          |
+| ----- | ------------------- | -------------------------------------------------------------- |
+| 22:14 | Session started     | Reading project structure                                      |
+| 22:15 | Analysis complete   | 4 pages, ~15 components identified                             |
+| 23:00 | Build Fixes         | Resolved React 19 type errors                                  |
+| 23:15 | Supabase Setup      | Added @supabase/ssr & middleware                               |
+| 23:30 | Build Success       | bun run build passes                                           |
+| 09:30 | Reverted Repo       | Reverted to `fb4b804` and force pushed                         |
+| 14:13 | Verification & Push | Successfully ran lint, build, and pushed monorepo structure    |
+| 14:15 | Deployment Fix      | Added vercel.json to resolve "missing dist" error              |
+| 19:30 | UI Refinement       | Polished LanguageSwitcher, Logo logic, and fixed scroll issues |
 
 ---
 

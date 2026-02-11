@@ -2,26 +2,22 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { SeriesIndex } from "@/lib/bucket/types";
 import ComicCard from "./ComicCard";
-import { comics as allComics } from "@/data/mockData";
 import useEmblaCarousel from "embla-carousel-react";
 import { Button } from "@/components/ui/button";
 
 const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
-const getComicsByDay = (day: string) => {
-  // Use day of week to filter or just shuffle data for variety
-  const dayIndex = days.indexOf(day);
-  return allComics.map((comic, index) => ({
-    ...comic,
-    isNew: (index + dayIndex) % 3 === 0,
-  })).slice(0, 12);
-};
-
-const DailySchedule = () => {
+const DailySchedule = ({ series }: { series: SeriesIndex["series"] }) => {
   const today = new Date().getDay();
   const [activeDay, setActiveDay] = useState(days[today]);
-  const scheduleComics = getComicsByDay(activeDay);
+  
+  // For now, just show a subset of series for the day
+  const scheduleComics = series.map((item, index) => ({
+    ...item,
+    isNew: (index + days.indexOf(activeDay)) % 3 === 0,
+  })).slice(0, 12);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -36,18 +32,23 @@ const DailySchedule = () => {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback((emblaApi: any) => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrevBtnEnabled(emblaApi.canScrollPrev());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNextBtnEnabled(emblaApi.canScrollNext());
   }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    onSelect(emblaApi);
+    
+    // Defer initialization to avoid synchronous setState inside effect
+    Promise.resolve().then(() => onSelect(emblaApi));
+
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
+
+    return () => {
+      emblaApi.off("reInit", onSelect);
+      emblaApi.off("select", onSelect);
+    };
   }, [emblaApi, onSelect, activeDay]); // Reset on day change
 
   return (
@@ -82,14 +83,14 @@ const DailySchedule = () => {
       <div className="relative group">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
-            {scheduleComics.map((comic, index) => (
-              <div key={`${activeDay}-${comic.id}`} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
+            {scheduleComics.map((item, index) => (
+              <div key={`${activeDay}-${item.id}`} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
-                  title={comic.title}
-                  genre={comic.genre}
-                  image={comic.image}
-                  isNew={comic.isNew}
-                  slug={comic.slug}
+                  title={item.title || item.id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                  genres={item.genres}
+                  cover={item.cover}
+                  isNew={item.isNew}
+                  id={item.id}
                   priority={index === 0}
                 />
               </div>

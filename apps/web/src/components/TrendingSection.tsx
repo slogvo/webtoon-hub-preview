@@ -2,27 +2,34 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { SeriesIndex } from "@/lib/bucket/types";
 import ComicCard from "./ComicCard";
-import { comics } from "@/data/mockData";
 import useEmblaCarousel from "embla-carousel-react";
 import { Button } from "@/components/ui/button";
 
-const trendingComics = comics.map((comic, index) => ({
-  ...comic,
-  rankChange: [2, 7, -2, 21, 2, -2, 1, 5, -3, 0][index % 10],
-  isNew: index % 4 === 0,
-})).slice(0, 12);
+interface TrendingSectionProps {
+  series: SeriesIndex["series"];
+}
 
-const popularComics = [...comics].reverse().map((comic, index) => ({
-  ...comic,
-  rankChange: [0, 1, -1, 3, 0, 2, -1, 4, -2, 1][index % 10],
-  isNew: index % 5 === 0,
-})).slice(0, 12);
-
-const TrendingSection = () => {
+const TrendingSection = ({ series }: TrendingSectionProps) => {
   const [activeTab, setActiveTab] = useState<"trending" | "popular">(
     "trending",
   );
+  
+  // Use real data
+  const trendingComics = series.slice(0, 12).map((item, index) => ({
+    ...item,
+    rank: index + 1,
+    rankChange: [2, 7, -2, 21, 2, -2, 1, 5, -3, 0][index % 10],
+    isNew: index % 4 === 0,
+  }));
+
+  const popularComics = [...series].reverse().slice(0, 12).map((item, index) => ({
+    ...item,
+    rank: index + 1,
+    rankChange: [0, 1, -1, 3, 0, 2, -1, 4, -2, 1][index % 10],
+    isNew: index % 5 === 0,
+  }));
   
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -37,18 +44,23 @@ const TrendingSection = () => {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   const onSelect = useCallback((emblaApi: any) => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrevBtnEnabled(emblaApi.canScrollPrev());
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNextBtnEnabled(emblaApi.canScrollNext());
   }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    onSelect(emblaApi);
+    
+    // Defer initialization to avoid synchronous setState inside effect
+    Promise.resolve().then(() => onSelect(emblaApi));
+
     emblaApi.on("reInit", onSelect);
     emblaApi.on("select", onSelect);
+
+    return () => {
+      emblaApi.off("reInit", onSelect);
+      emblaApi.off("select", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   const displayComics =
@@ -93,16 +105,16 @@ const TrendingSection = () => {
       <div className="relative group">
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
-            {displayComics.map((comic, index) => (
-              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
+            {displayComics.map((item, index) => (
+              <div key={item.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
                   rank={index + 1}
-                  title={comic.title}
-                  genre={comic.genre}
-                  image={comic.image}
-                  rankChange={comic.rankChange}
-                  isNew={comic.isNew}
-                  slug={comic.slug}
+                  title={item.title || item.id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
+                  genres={item.genres}
+                  cover={item.cover}
+                  rankChange={item.rankChange}
+                  isNew={item.isNew}
+                  id={item.id}
                   priority={index === 0}
                 />
               </div>
