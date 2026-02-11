@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { useState, useCallback, useEffect } from "react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import ComicCard from "./ComicCard";
 import { comics } from "@/data/mockData";
+import useEmblaCarousel from "embla-carousel-react";
+import { Button } from "@/components/ui/button";
 
 const categories = [
   "Drama",
@@ -16,9 +18,7 @@ const categories = [
   "Sci-fi",
 ];
 
-// Generate category comics from our mock data
 const getComicsForCategory = (category: string) => {
-  // Use our existing comics data and filter/map for display
   return comics.map((comic, index) => ({
     ...comic,
     genre: category,
@@ -30,50 +30,100 @@ const CategorySection = () => {
   const [activeCategory, setActiveCategory] = useState("Drama");
   const categoryComics = getComicsForCategory(activeCategory);
 
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    slidesToScroll: 1,
+    containScroll: "trimSnaps",
+  });
+
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+
+  const onSelect = useCallback((emblaApi: any) => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPrevBtnEnabled(emblaApi.canScrollPrev());
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setNextBtnEnabled(emblaApi.canScrollNext());
+  }, []);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    onSelect(emblaApi);
+    emblaApi.on("reInit", onSelect);
+    emblaApi.on("select", onSelect);
+  }, [emblaApi, onSelect]);
+
   return (
     <section className="py-8">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="section-title">Popular Series by Category</h2>
-          <a href="#" className="view-all">
-            View all
-            <ChevronRight className="w-4 h-4" />
-          </a>
-        </div>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold tracking-tight">Browse by Category</h2>
+        <a href="#" className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+          View all
+          <ChevronRight className="w-4 h-4" />
+        </a>
+      </div>
 
-        {/* Category Pills */}
-        <div className="flex gap-2 mb-6 flex-wrap">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`category-pill ${activeCategory === category ? "category-pill-active" : ""}`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+      {/* Category Pills */}
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {categories.map((category) => (
+          <button
+            key={category}
+            onClick={() => setActiveCategory(category)}
+            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+              activeCategory === category 
+                ? "bg-foreground text-background" 
+                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+            }`}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
 
-        {/* Comics Grid */}
-        <div className="relative">
-          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+      {/* Carousel */}
+      <div className="relative group">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-4">
             {categoryComics.map((comic) => (
-              <ComicCard
-                key={comic.id}
-                title={comic.title}
-                genre={comic.genre}
-                image={comic.image}
-                isNew={comic.isNew}
-                slug={comic.slug}
-              />
+              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(25%-12px)]">
+                <ComicCard
+                  title={comic.title}
+                  genre={comic.genre}
+                  image={comic.image}
+                  isNew={comic.isNew}
+                  slug={comic.slug}
+                />
+              </div>
             ))}
           </div>
-
-          <button className="carousel-arrow right-0">
-            <ChevronRight className="w-5 h-5" />
-          </button>
         </div>
+
+        {/* Navigation Buttons */}
+        {prevBtnEnabled && (
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-10 hidden sm:flex"
+            onClick={scrollPrev}
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+        )}
+        {nextBtnEnabled && (
+          <Button
+            variant="secondary"
+            size="icon"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rounded-full shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-10 hidden sm:flex"
+            onClick={scrollNext}
+          >
+            <ChevronRight className="h-5 w-5" />
+          </Button>
+        )}
       </div>
     </section>
   );

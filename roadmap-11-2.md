@@ -19,12 +19,12 @@ Status: 🚧 In Progress
 
 - [x] Remove "Click to read" component ✅
 - [x] Remove Disney/Marvel/Star Wars section ✅
-- [ ] /verification-and-push (Cleanup) ⏳
+- [x] /verification-and-push (Cleanup) ✅ [16:26]
 
-## Phase 4: Carousel & Logic ⏳
+## Phase 4: Carousel & Logic ✅
 
-- [ ] Fix Slider functionality ⏳
-- [ ] Limit cards to 4 per slide ⏳
+- [x] Fix Slider functionality ✅
+- [x] Limit cards to 4 per slide ✅
 - [ ] /verification-and-push (Carousel) ⏳
 
 ## Phase 5: Footer Refactoring ⏳
