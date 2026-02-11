@@ -52,15 +52,16 @@ const NewOnWebtoon = async () => {
         <div className="relative">
           <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
             {comics.map((comic, index) => (
-              <ComicCard
-                key={comic.id}
-                title={comic.title}
-                genre={comic.genre}
-                image={comic.image}
-                isNew={comic.isNew}
-                slug={comic.slug}
-                priority={index === 0}
-              />
+              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
+                <ComicCard
+                  title={comic.title}
+                  genre={comic.genre}
+                  image={comic.image}
+                  isNew={comic.isNew}
+                  slug={comic.slug}
+                  priority={index === 0}
+                />
+              </div>
             ))}
           </div>
 

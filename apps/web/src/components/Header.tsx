@@ -58,7 +58,7 @@ const Header = () => {
     <header
       className={cn(
         "fixed top-0 right-0 left-0 z-50 w-full transition-all duration-300",
-        isScrolled ? "backdrop-blur-xl bg-background/80 border-b border-border/50" : "bg-transparent",
+        isScrolled ? "backdrop-blur-xl bg-background/80" : "bg-transparent",
         isHidden ? "-translate-y-full" : "translate-y-0"
       )}
     >
@@ -96,43 +96,6 @@ const Header = () => {
 
           {/* Right Actions (Right) */}
           <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-            <nav className="hidden xl:flex items-center gap-6 mr-2">
-              <Link
-                href="/shop"
-                className="nav-item group relative h-10 cursor-pointer px-1"
-              >
-                <div className="flip-inner flex h-full items-center justify-center">
-                  <span className="side side-front flex h-full items-center justify-center text-sm font-medium whitespace-nowrap text-foreground/70 group-hover:text-foreground">
-                    WEBTOON SHOP
-                  </span>
-                  <span className="side side-back absolute inset-0 flex h-full items-center justify-center bg-linear-to-r from-primary to-amber-600 bg-clip-text text-sm font-bold whitespace-nowrap text-transparent">
-                    WEBTOON SHOP
-                  </span>
-                </div>
-              </Link>
-              <Link
-                href="/creators"
-                className="nav-item group relative h-10 cursor-pointer px-1"
-              >
-                <div className="flip-inner flex h-full items-center justify-center">
-                  <span className="side side-front flex h-full items-center justify-center text-sm font-medium whitespace-nowrap text-foreground/70 group-hover:text-foreground">
-                    Creators 101
-                  </span>
-                  <span className="side side-back absolute inset-0 flex h-full items-center justify-center bg-linear-to-r from-primary to-amber-600 bg-clip-text text-sm font-bold whitespace-nowrap text-transparent">
-                    Creators 101
-                  </span>
-                </div>
-              </Link>
-            </nav>
-
-            <Button
-              variant="outline"
-              size="sm"
-              className="hidden sm:inline-flex rounded-full px-5 font-semibold transition-all hover:bg-primary hover:text-primary-foreground hover:border-primary"
-            >
-              Publish
-            </Button>
-
             <Button
               variant="ghost"
               size="sm"
@@ -181,22 +144,7 @@ const Header = () => {
                 className="w-full bg-secondary/50 border border-border rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:ring-1 focus:ring-primary focus:bg-background"
               />
             </div>
-            <Link
-              href="/shop"
-              className="px-4 py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              WEBTOON SHOP
-            </Link>
-            <Link
-              href="/creators"
-              className="px-4 py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Creators 101
-            </Link>
             <div className="flex gap-2 px-2 pt-2">
-              <Button className="flex-1 rounded-full" variant="outline">Publish</Button>
               <Button className="flex-1 rounded-full">Log In</Button>
             </div>
           </div>

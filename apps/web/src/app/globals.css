@@ -23,6 +23,7 @@
   --input: 240 5.9% 90%;
   --ring: 38 92% 50%;
   --radius: 0.75rem;
+  --new-badge: 142 71% 45%;
 }
 
 .dark {
@@ -45,6 +46,7 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 38 92% 50%;
+  --new-badge: 142 71% 45%;
 }
 
 @theme inline {
@@ -144,19 +146,33 @@ body {
   transform: scale(1.05);
 }
 
+.new-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  background: hsl(var(--new-badge));
+  color: white;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .rank-number {
   position: absolute;
-  bottom: 0;
-  left: 0.25rem;
-  font-size: 4.5rem;
-  font-weight: 800;
+  bottom: -0.5rem;
+  left: -0.5rem;
+  font-size: 4rem;
+  font-weight: 900;
   line-height: 1;
   color: hsl(var(--background));
-  text-shadow:
-    2px 2px 0 hsl(var(--foreground)),
-    -2px 2px 0 hsl(var(--foreground)),
-    2px -2px 0 hsl(var(--foreground)),
-    -2px -2px 0 hsl(var(--foreground));
+  -webkit-text-stroke: 2px hsl(var(--foreground));
+  z-index: 5;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 .rank-change {
@@ -166,11 +182,11 @@ body {
 }
 
 .rank-up {
-  color: hsl(var(--rank-up));
+  color: #ef4444;
 }
 
 .rank-down {
-  color: hsl(var(--rank-down));
+  color: #3b82f6;
 }
 
 .new-badge {

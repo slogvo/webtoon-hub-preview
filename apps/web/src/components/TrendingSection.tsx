@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 
 const trendingComics = comics.map((comic, index) => ({
   ...comic,
-  rankChange: [2, 7, -2, 21, 2, -2, 1][index % 7],
-  isNew: index === 0,
-}));
+  rankChange: [2, 7, -2, 21, 2, -2, 1, 5, -3, 0][index % 10],
+  isNew: index % 4 === 0,
+})).slice(0, 12);
 
 const popularComics = [...comics].reverse().map((comic, index) => ({
   ...comic,
-  rankChange: [0, 1, -1, 3, 0, 2, -1][index % 7],
-  isNew: index === 3,
-}));
+  rankChange: [0, 1, -1, 3, 0, 2, -1, 4, -2, 1][index % 10],
+  isNew: index % 5 === 0,
+})).slice(0, 12);
 
 const TrendingSection = () => {
   const [activeTab, setActiveTab] = useState<"trending" | "popular">(
@@ -26,7 +26,7 @@ const TrendingSection = () => {
   
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
-    slidesToScroll: 1,
+    slidesToScroll: 2,
     containScroll: "trimSnaps",
   });
 
@@ -94,7 +94,7 @@ const TrendingSection = () => {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
             {displayComics.map((comic, index) => (
-              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(25%-12px)]">
+              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
                   rank={index + 1}
                   title={comic.title}

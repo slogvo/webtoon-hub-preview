@@ -22,8 +22,8 @@ const getComicsForCategory = (category: string) => {
   return comics.map((comic, index) => ({
     ...comic,
     genre: category,
-    isNew: index === 1,
-  }));
+    isNew: index % 3 === 1,
+  })).slice(0, 12);
 };
 
 const CategorySection = () => {
@@ -32,7 +32,7 @@ const CategorySection = () => {
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
-    slidesToScroll: 1,
+    slidesToScroll: 2,
     containScroll: "trimSnaps",
   });
 
@@ -90,7 +90,7 @@ const CategorySection = () => {
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
             {categoryComics.map((comic) => (
-              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(25%-12px)]">
+              <div key={comic.id} className="flex-none w-[calc(50%-8px)] sm:w-[calc(33.333%-10.666px)] lg:w-[calc(16.666%-13.333px)]">
                 <ComicCard
                   title={comic.title}
                   genre={comic.genre}

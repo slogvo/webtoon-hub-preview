@@ -75,14 +75,14 @@ const ComicCard = ({
     return (
       <Link
         href={`/comic/${slug}`}
-        className="comic-card shrink-0 w-44 group block"
+        className="comic-card shrink-0 group block"
       >
         {content}
       </Link>
     );
   }
 
-  return <div className="comic-card shrink-0 w-44 group">{content}</div>;
+  return <div className="comic-card shrink-0 group">{content}</div>;
 };
 
 export default ComicCard;
