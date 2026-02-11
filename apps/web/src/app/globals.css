@@ -23,7 +23,7 @@
   --input: 240 5.9% 90%;
   --ring: 38 92% 50%;
   --radius: 0.75rem;
-  --new-badge: 0 84% 60%; /* Rose/Red 600-ish */
+  --new-badge: 38 92% 50%; /* Primary color */
 }
 
 .dark {
@@ -46,7 +46,7 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 38 92% 50%;
-  --new-badge: 0 84% 60%;
+  --new-badge: 38 92% 50%;
 }
 
 @theme inline {
@@ -142,7 +142,7 @@ body {
   transition: transform 0.3s;
 }
 
-.group:hover .comic-card-image {
+.comic-card.group:hover .comic-card-image {
   transform: scale(1.05);
 }
 
@@ -193,17 +193,6 @@ button, .category-pill, .nav-item {
   color: #3b82f6;
 }
 
-.new-badge {
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  padding: 0.125rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 0.25rem;
-  background: hsl(var(--new-badge));
-  color: hsl(var(--primary-foreground));
-}
 
 .section-title {
   font-size: 1.5rem;

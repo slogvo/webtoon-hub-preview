@@ -76,20 +76,20 @@ const Header = () => {
                 alt="4HumAI Logo"
                 width={129}
                 height={44}
-                className="h-11 rounded-xl invert dark:invert-0"
+                className="h-11 rounded-xl dark:invert"
                 priority
               />
             </Link>
           </div>
 
           {/* Search Input (Center-ish) */}
-          <div className="hidden lg:flex flex-[1.5] items-center justify-center px-8 text-white">
+          <div className="hidden lg:flex flex-[1.5] items-center justify-center px-8">
             <div className="relative w-full max-w-md group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Search series or creators..."
-                className="w-full bg-secondary/50 border border-border rounded-full py-2.5 pl-10 pr-4 text-sm focus:outline-hidden focus:ring-1 focus:ring-primary focus:bg-background transition-all"
+                className="w-full bg-secondary border border-border rounded-full py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-hidden focus:ring-1 focus:ring-primary focus:bg-background transition-all"
               />
             </div>
           </div>

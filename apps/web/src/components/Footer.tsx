@@ -19,7 +19,7 @@ const companyLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-black/5 bg-[#F9F9F9] py-16 text-[#181818] transition-colors duration-300 dark:border-white/5 dark:bg-[#0A0A0A] dark:text-white">
+    <footer className="border-t border-border bg-secondary/30 py-16 text-foreground transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 lg:gap-16">
           {/* Brand & Mission */}
@@ -30,7 +30,7 @@ const Footer = () => {
                 alt="4HumAI Logo"
                 width={129}
                 height={44}
-                className="h-11 rounded-xl invert dark:invert-0"
+                className="h-11 rounded-xl dark:invert"
               />
             </Link>
             <p className="max-w-md text-base leading-relaxed text-black/60 dark:text-white/60">
