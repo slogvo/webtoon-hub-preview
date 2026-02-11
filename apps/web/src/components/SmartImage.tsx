@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Image, { ImageProps, StaticImageData } from "next/image";
+import { Skeleton } from "./ui/skeleton";
+import { cn } from "@/lib/utils";
 
 type ImageSrc = string | StaticImageData;
 
@@ -12,42 +14,57 @@ interface SmartImageProps extends Omit<ImageProps, "src" | "onError"> {
 }
 
 /**
- * A wrapper around Next.js Image that handles automatic fallback for naming mismatches.
- * Specifically handles the case where a "-1.webp" file might not exist but ".webp" does.
+ * A wrapper around Next.js Image that handles automatic fallback for naming mismatches
+ * and displays a skeleton while loading.
  */
 export const SmartImage = ({
   src,
   fallbackSuffix = ".webp",
   originalSuffix = "-1.webp",
   alt,
+  className,
   ...props
 }: SmartImageProps) => {
   const [imgSrc, setImgSrc] = useState<ImageSrc>(src);
   const [hasTriedFallback, setHasTriedFallback] = useState(false);
   const [prevSrc, setPrevSrc] = useState<ImageSrc>(src);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Sync internal state with prop changes during render
+  // Sync internal state with prop changes
   if (src !== prevSrc) {
     setImgSrc(src);
     setHasTriedFallback(false);
     setPrevSrc(src);
+    setIsLoading(true);
   }
 
   const handleError = () => {
     if (!hasTriedFallback && typeof imgSrc === "string" && imgSrc.includes(originalSuffix)) {
       const fallbackUrl = imgSrc.replace(originalSuffix, fallbackSuffix);
-      console.log(`SmartImage fallback: ${imgSrc} -> ${fallbackUrl}`);
       setImgSrc(fallbackUrl);
       setHasTriedFallback(true);
+    } else {
+      setIsLoading(false); // Stop loading if even fallback fails
     }
   };
 
   return (
-    <Image
-      {...props}
-      src={imgSrc}
-      alt={alt}
-      onError={handleError}
-    />
+    <div className={cn("relative overflow-hidden", className)}>
+      {isLoading && (
+        <Skeleton className="absolute inset-0 z-10 rounded-inherit" />
+      )}
+      <Image
+        {...props}
+        src={imgSrc}
+        alt={alt}
+        className={cn(
+          "transition-opacity duration-300",
+          isLoading ? "opacity-0" : "opacity-100",
+          className
+        )}
+        onLoad={() => setIsLoading(false)}
+        onError={handleError}
+      />
+    </div>
   );
 };
