@@ -85,30 +85,30 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Search Input (Center-ish) */}
+          {/* Search Input (Center-ish) - Hidden for now */}
           <div className="hidden lg:flex flex-[1.5] items-center justify-center px-8">
-            <div className="relative w-full max-w-md group">
+            {/* <div className="relative w-full max-w-md group">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <input
                 type="text"
                 placeholder="Search series or creators..."
                 className="w-full bg-foreground/5 border-none rounded-full py-2.5 pl-10 pr-4 text-sm text-foreground placeholder:text-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-foreground/10 transition-all font-medium"
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Right Actions (Right) */}
           <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
-            <Button
+            {/* <Button
               variant="ghost"
               size="sm"
               className="rounded-full px-5 font-bold text-foreground/80 hover:text-foreground hover:bg-muted transition-all duration-200 focus-visible:ring-0 focus-visible:ring-offset-0"
             >
               Log In
-            </Button>
+            </Button> */}
 
             <div className="flex items-center gap-2">
-              <LanguageSwitcher />
+              {/* <LanguageSwitcher /> */}
               
               {mounted && (
                 <Button
@@ -123,15 +123,15 @@ const Header = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <Button
+            {/* Mobile Menu Button - Hidden */}
+            {/* <Button
               variant="ghost"
               size="icon"
               className="lg:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </Button>
+            </Button> */}
           </div>
         </div>
 
@@ -143,7 +143,7 @@ const Header = () => {
           )}
         >
           <div className="flex flex-col gap-4 pt-4 border-t border-border/50">
-            <div className="relative group px-2">
+            {/* <div className="relative group px-2">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <input
                 type="text"
@@ -153,7 +153,7 @@ const Header = () => {
             </div>
             <div className="flex gap-2 px-2 pt-2">
               <Button className="flex-1 rounded-full">Log In</Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

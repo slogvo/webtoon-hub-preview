@@ -35,7 +35,7 @@ export default async function HomePage() {
       <div className="flex flex-col gap-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <TrendingSection series={allSeries} />
         <CategorySection series={allSeries} />
-        <DailySchedule series={allSeries} />
+        {/* <DailySchedule series={allSeries} /> */}
       </div>
     </>
   );

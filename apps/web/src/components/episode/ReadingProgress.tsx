@@ -97,8 +97,8 @@ export const ReadingProgress = ({
   return (
     <div 
       className={cn(
-        "fixed bottom-20 right-6 z-50 flex items-center justify-center pointer-events-none transition-transform duration-300 ease-in-out",
-         !isVisible && "translate-y-[200%]"
+        "fixed bottom-20 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-6 z-50 flex items-center justify-center pointer-events-none transition-transform duration-300 ease-in-out",
+         !isVisible && "translate-y-32"
       )}
     >
       <div className="bg-background/80 backdrop-blur-md border border-border shadow-lg px-4 py-2 rounded-full text-xs font-semibold tabular-nums text-foreground/80 flex items-center gap-2 animate-in fade-in slide-in-from-bottom-4 duration-500">
