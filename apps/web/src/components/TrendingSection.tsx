@@ -20,14 +20,12 @@ const TrendingSection = ({ series }: TrendingSectionProps) => {
   const trendingComics = series.slice(0, 12).map((item, index) => ({
     ...item,
     rank: index + 1,
-    rankChange: [2, 7, -2, 21, 2, -2, 1, 5, -3, 0][index % 10],
     isNew: index % 4 === 0,
   }));
 
   const popularComics = [...series].reverse().slice(0, 12).map((item, index) => ({
     ...item,
     rank: index + 1,
-    rankChange: [0, 1, -1, 3, 0, 2, -1, 4, -2, 1][index % 10],
     isNew: index % 5 === 0,
   }));
   
@@ -112,7 +110,6 @@ const TrendingSection = ({ series }: TrendingSectionProps) => {
                   title={item.title || item.id.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())}
                   genres={item.genres}
                   cover={item.cover}
-                  rankChange={item.rankChange}
                   isNew={item.isNew}
                   id={item.id}
                   priority={index === 0}

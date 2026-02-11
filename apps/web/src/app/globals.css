@@ -168,10 +168,14 @@ body {
   font-size: 4rem;
   font-weight: 900;
   line-height: 1;
-  color: hsl(var(--background));
-  -webkit-text-stroke: 1.5px hsl(var(--foreground));
+  color: hsl(var(--foreground));
+  text-shadow: 
+    -1.5px -1.5px 0 hsl(var(--background)),
+     1.5px -1.5px 0 hsl(var(--background)),
+    -1.5px  1.5px 0 hsl(var(--background)),
+     1.5px  1.5px 0 hsl(var(--background));
   z-index: 5;
-  opacity: 0.9;
+  opacity: 0.95;
   pointer-events: none;
 }
 

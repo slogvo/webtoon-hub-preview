@@ -27,7 +27,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="global-footer border-t border-border bg-background py-16 text-foreground transition-colors duration-300">
+    <footer className="global-footer bg-background py-16 text-foreground transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4 lg:gap-16">
           {/* Brand & Mission */}
@@ -52,8 +52,6 @@ const Footer = () => {
                 href="https://www.linkedin.com/company/ai-for-humanity-labs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full border border-border p-2.5 text-muted-foreground transition-all hover:border-foreground hover:text-foreground"
-                aria-label="LinkedIn"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
@@ -102,8 +100,8 @@ const Footer = () => {
         </div>
 
         {/* Ethical Promise */}
-        <div className="mt-16 border-t border-border pt-12">
-          <div className="rounded-3xl bg-foreground/2 p-8 text-center">
+        <div className="mt-16 pt-12">
+          <div className="text-center">
             <h4 className="mb-3 text-lg font-medium text-foreground">
               Our Ethical AI Promise
             </h4>
@@ -114,7 +112,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-6 border-t border-border pt-8 text-sm text-foreground/60 md:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-6 pt-8 text-sm text-foreground/60 md:flex-row">
           <div className="text-center md:text-left">
             <p>2 Nguyen Thanh Son, Thu Duc City, Ho Chi Minh City, Vietnam</p>
             <p className="mt-1">

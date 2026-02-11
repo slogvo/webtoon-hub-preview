@@ -5,6 +5,7 @@ import NextImage from "next/image";
 import { EpisodeHeader } from "@/components/episode/EpisodeHeader";
 import { EpisodeNavigation } from "@/components/episode/EpisodeNavigation";
 import { EpisodeEndActions } from "@/components/episode/EpisodeEndActions";
+import { ReadingProgress } from "@/components/episode/ReadingProgress";
 import { SeriesMeta, EpisodeMeta } from "@/lib/bucket/types";
 
 interface PageProps {
@@ -140,6 +141,8 @@ export default async function EpisodeViewerPage({ params }: PageProps) {
             {panels.map((panelUrl, index) => (
               <NextImage
                 key={index}
+                id={`panel-${index}`}
+                data-panel-index={index + 1}
                 src={panelUrl}
                 alt={`${seriesMeta.seriesId} - Episode ${episodeIndex + 1} - Panel ${index + 1}`}
                 width={768}
@@ -152,6 +155,12 @@ export default async function EpisodeViewerPage({ params }: PageProps) {
             ))}
           </div>
         </main>
+
+        <ReadingProgress 
+          panelsCount={panels.length} 
+          seriesId={slug}
+          episodeId={episodeId}
+        />
 
         <EpisodeNavigation
           slug={slug}

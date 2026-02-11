@@ -1,6 +1,5 @@
 import TrendingSection from "@/components/TrendingSection";
 import CategorySection from "@/components/CategorySection";
-import NewOnWebtoon from "@/components/NewOnWebtoon";
 import DailySchedule from "@/components/DailySchedule";
 import { AssetClient } from "@/lib/bucket/client";
 import { Metadata } from "next";
@@ -36,7 +35,6 @@ export default async function HomePage() {
       <div className="flex flex-col gap-12 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <TrendingSection series={allSeries} />
         <CategorySection series={allSeries} />
-        <NewOnWebtoon series={allSeries} />
         <DailySchedule series={allSeries} />
       </div>
     </>

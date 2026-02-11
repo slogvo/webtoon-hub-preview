@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUp, ArrowDown } from "lucide-react";
 
 import { AssetClient } from "@/lib/bucket/client";
 import { SmartImage } from "./SmartImage";
@@ -9,7 +8,6 @@ interface ComicCardProps {
   title: string;
   genres: string[];
   cover: string;
-  rankChange?: number;
   isNew?: boolean;
   id?: string;
   priority?: boolean;
@@ -20,7 +18,6 @@ const ComicCard = ({
   title,
   genres,
   cover,
-  rankChange,
   isNew,
   id,
   priority,
@@ -50,23 +47,6 @@ const ComicCard = ({
           <h3 className="font-semibold text-sm text-foreground truncate">
             {title}
           </h3>
-          {rankChange !== undefined && rankChange !== 0 && (
-            <span
-              className={`rank-change flex items-center ${rankChange > 0 ? "rank-up" : "rank-down"}`}
-            >
-              {rankChange > 0 ? (
-                <>
-                  <ArrowUp className="w-3 h-3" />
-                  {rankChange}
-                </>
-              ) : (
-                <>
-                  <ArrowDown className="w-3 h-3" />
-                  {Math.abs(rankChange)}
-                </>
-              )}
-            </span>
-          )}
         </div>
         <p className="text-xs text-muted-foreground">{genreLabel}</p>
       </div>
