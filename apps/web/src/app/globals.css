@@ -270,3 +270,30 @@ body {
     transform: translateX(0);
   }
 }
+
+/* ===== Header Animations ===== */
+.nav-item {
+  perspective: 1200px;
+}
+
+.flip-inner {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.nav-item:hover .flip-inner {
+  transform: rotateX(-180deg);
+}
+
+.side {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.side-front {
+  transform: rotateX(0deg);
+}
+
+.side-back {
+  transform: rotateX(180deg);
+}

@@ -4,6 +4,8 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const funnelSans = Funnel_Sans({
@@ -113,7 +115,12 @@ export default function RootLayout({
         >
           <QueryProvider>
             <TooltipProvider delayDuration={0}>
-              {children}
+              <div className="bg-background text-foreground min-h-screen transition-colors duration-300">
+                <Header />
+                <div className="h-20 lg:h-[84px]" />
+                <main>{children}</main>
+                <Footer />
+              </div>
               <Toaster richColors position="top-right" />
             </TooltipProvider>
           </QueryProvider>

@@ -1,10 +1,8 @@
-import Header from "@/components/Header";
 import TrendingSection from "@/components/TrendingSection";
 import PromoBanner from "@/components/PromoBanner";
 import CategorySection from "@/components/CategorySection";
 import NewOnWebtoon from "@/components/NewOnWebtoon";
 import DailySchedule from "@/components/DailySchedule";
-import Footer from "@/components/Footer";
 import RecentlyViewed from "@/components/RecentlyViewed";
 
 // JSON-LD Structured Data for SEO
@@ -42,16 +40,12 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main>
-          <TrendingSection />
-          <PromoBanner />
-          <CategorySection />
-          <NewOnWebtoon />
-          <DailySchedule />
-        </main>
-        <Footer />
+      <div className="flex flex-col gap-12 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <TrendingSection />
+        <PromoBanner />
+        <CategorySection />
+        <NewOnWebtoon />
+        <DailySchedule />
         <RecentlyViewed />
       </div>
     </>
