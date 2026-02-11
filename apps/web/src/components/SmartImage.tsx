@@ -48,8 +48,14 @@ export const SmartImage = ({
     }
   };
 
+  const isFill = "fill" in props && props.fill;
+
   return (
-    <div className={cn("relative overflow-hidden", className)}>
+    <div className={cn(
+      "overflow-hidden",
+      isFill ? "absolute inset-0" : "relative",
+      !isFill && className 
+    )}>
       {isLoading && (
         <Skeleton className="absolute inset-0 z-10 rounded-inherit" />
       )}
