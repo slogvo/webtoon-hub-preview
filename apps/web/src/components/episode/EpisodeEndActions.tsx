@@ -33,12 +33,14 @@ export const EpisodeEndActions = ({
             </Button>
           </div>
           {hasNextEpisode && (
-            <Link href={`/comic/${slug}/episode/${currentEpisode + 1}`}>
-              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                Next Episode
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
+            <div className="pt-4">
+              <Link href={`/comic/${slug}/episode/${currentEpisode + 1}`}>
+                <Button className="px-10 h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-lg shadow-primary/20">
+                  Next Episode
+                  <ChevronRight className="w-5 h-5 ml-1" />
+                </Button>
+              </Link>
+            </div>
           )}
         </div>
       </div>

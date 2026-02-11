@@ -2,7 +2,6 @@ import TrendingSection from "@/components/TrendingSection";
 import CategorySection from "@/components/CategorySection";
 import NewOnWebtoon from "@/components/NewOnWebtoon";
 import DailySchedule from "@/components/DailySchedule";
-import RecentlyViewed from "@/components/RecentlyViewed";
 
 // JSON-LD Structured Data for SEO
 const jsonLd = {
@@ -44,7 +43,6 @@ export default function HomePage() {
         <CategorySection />
         <NewOnWebtoon />
         <DailySchedule />
-        <RecentlyViewed />
       </div>
     </>
   );

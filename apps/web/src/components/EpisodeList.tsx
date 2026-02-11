@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { Episode } from "@/data/mockData";
+import { format } from "date-fns";
 
 interface EpisodeListProps {
   episodes: Episode[];
@@ -36,7 +37,9 @@ const EpisodeList = ({ episodes, comicSlug }: EpisodeListProps) => {
 
           {/* Meta */}
           <div className="flex-shrink-0 text-right">
-            <p className="text-sm text-muted-foreground">{episode.date}</p>
+            <p className="text-sm text-muted-foreground">
+              {episode.date.includes('T') ? format(new Date(episode.date), "MMM dd, yyyy") : episode.date}
+            </p>
             <div className="flex items-center justify-end gap-1 text-sm text-muted-foreground mt-1">
               <Heart className="w-3 h-3" />
               <span>{episode.likes.toLocaleString()}</span>

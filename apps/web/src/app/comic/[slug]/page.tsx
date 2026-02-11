@@ -16,6 +16,8 @@ import EpisodeList from "@/components/EpisodeList";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SeriesMeta, SeriesIndex } from "@/lib/bucket/types";
+import { format } from "date-fns";
+import { comics } from "@/data/mockData";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -111,68 +113,51 @@ export default async function ComicDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  // MAPPING: Convert Bucket Data to UI Props
-  // In a real app, we would fetch LocaleMeta here to get Title/Description
-  // For this preview, we Mock the "UI Data" using the Series Meta + Placeholders
+  const mockSeries = comics.find(c => c.slug === seriesMeta.seriesId);
 
   const coverUrl = AssetClient.getCoverUrl(
     seriesMeta.seriesId,
     seriesMeta.cover,
   );
 
-  // We need to fetch episodes to render the list
-  // The bucket structure doesn't give us a "list of episodes" directly in series/meta.json
-  // It only gives "thumbnails" array.
-  // BUT the spec says: "./{seriesId}/{episodeId}/meta.json"
-  // So we assume we know the Episode IDs?
-  // WAIT: The spec `index.json` only list series.
-  // `series/meta.json` has `thumbnails: [{ index: 1, hash: ... }]`. This looks like "Episode Thumbnails"?
-  // If `thumbnails` array corresponds to episodes, we can map it.
-
-  // For the Mock Data Generator, I generated 5 episodes for each series.
-  // I will assume for this UI that we have 5 episodes.
-  // In reality, `series/meta.json` should probably contain an `episodes` list or range.
-  // Let's fake the episodes list based on my knowledge of the mock generator (5 eps).
-
   const defaultLocale = seriesMeta.locales[0] || "en";
 
-  const episodes = Array.from({ length: 5 }, (_, i) => {
+  const episodesCount = mockSeries ? mockSeries.episodes.length : 5;
+  const episodes = Array.from({ length: episodesCount }, (_, i) => {
     const episodeId = `ep-${String(i + 1).padStart(3, "0")}`;
-    // In mock data, we used "thumb-hash-1.jpg" for all episode/locale thumbs
-    // In real app, we would get this hash from EpisodeMeta or LocaleMeta
     const thumbHash = seriesMeta.thumbnails[0]?.hash || "thumb-hash-1.jpg";
 
     return {
       id: episodeId,
-      title: `Episode ${i + 1}`,
+      title: mockSeries?.episodes[i]?.title || `Episode ${i + 1}`,
       number: i + 1,
-      date: seriesMeta.publishAt,
+      date: seriesMeta.publishAt ? format(new Date(seriesMeta.publishAt), "MMM dd, yyyy") : "N/A",
       thumbnail: AssetClient.getThumbUrl(
         seriesMeta.seriesId,
         episodeId,
         defaultLocale,
         thumbHash,
       ),
-      likes: 0,
-      panels: [], // Added to satisfy Episode type
+      likes: mockSeries?.episodes[i]?.likes || 0,
+      panels: [],
     };
   });
 
   const comic = {
     slug: seriesMeta.seriesId,
-    title: seriesMeta.seriesId, // TODO: Localize
-    description: "Description loading from locale...", // TODO: Localize
-    author: "Unknown Author",
+    title: mockSeries?.title || seriesMeta.seriesId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+    description: mockSeries?.description || "In a world of constant change, one warrior stands alone against the darkness. This epic journey explores themes of courage, sacrifice, and the search for truth.",
+    author: mockSeries?.author || "Unknown Author",
     genre: seriesMeta.genres[0],
     status: seriesMeta.status,
-    updateDay: "Monday",
-    views: "1.2M", // Fake stats
-    subscribers: "100K", // Fake stats
-    rating: 9.8,
+    updateDay: mockSeries?.updateDay || "Monday",
+    views: mockSeries?.views || "1.2M",
+    subscribers: mockSeries?.subscribers || "100K",
+    rating: mockSeries?.rating || 9.8,
     banner: coverUrl,
     thumbnail: coverUrl,
     episodes: episodes,
-    artist: "Unknown Artist",
+    artist: mockSeries?.artist || "Unknown Artist",
   };
 
   return (
@@ -205,69 +190,70 @@ export default async function ComicDetailPage({ params }: PageProps) {
             <span className="font-medium">Back</span>
           </Link>
 
-          {/* Content Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-8">
-            <div className="container mx-auto">
-              <span className="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-3">
-                {comic.genre}
-              </span>
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 max-w-3xl leading-tight">
-                {comic.title}
-              </h1>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <span className="font-medium">{comic.author}</span>
-                {comic.artist && (
-                  <>
-                    <span>,</span>
-                    <span>{comic.artist}</span>
-                  </>
-                )}
-              </div>
+        {/* Content Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <span className="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-3">
+              {comic.genre}
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-3 max-w-3xl leading-tight">
+              {comic.title}
+            </h1>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <span className="font-medium">{comic.author}</span>
+              {comic.artist && (
+                <>
+                  <span>,</span>
+                  <span>{comic.artist}</span>
+                </>
+              )}
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Main Content */}
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Episode List */}
-            <div className="lg:col-span-2">
-              <EpisodeList episodes={comic.episodes} comicSlug={comic.slug} />
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Episode List */}
+          <div className="lg:col-span-2">
+            <EpisodeList episodes={comic.episodes} comicSlug={comic.slug} />
+          </div>
+
+          {/* Sidebar */}
+          <div className="lg:col-span-1">
+            {/* Stats */}
+            <div className="flex items-center gap-6 mb-8 bg-secondary/30 p-4 rounded-2xl">
+              <div className="flex items-center gap-2">
+                <Eye className="w-5 h-5 text-muted-foreground" />
+                <span className="font-bold">{comic.views}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-primary" />
+                <span className="font-bold">{comic.subscribers}</span>
+              </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              {/* Stats */}
-              <div className="flex items-center gap-6 mb-6">
-                <div className="flex items-center gap-2">
-                  <Eye className="w-5 h-5 text-muted-foreground" />
-                  <span className="font-semibold">{comic.views}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-primary" />
-                  <span className="font-semibold">{comic.subscribers}</span>
-                </div>
-              </div>
+            {/* Description */}
+            <div className="mb-8">
+              <h3 className="text-lg font-bold mb-3">About</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                {comic.description}
+              </p>
+            </div>
 
-              {/* Description */}
-              <div className="mb-6">
-                <p className="text-muted-foreground leading-relaxed">
-                  {comic.description}
-                </p>
-              </div>
-
-              {/* Actions */}
-              <div className="space-y-3">
-                <Link href={`/comic/${comic.slug}/episode/1`} className="block">
-                  <Button className="w-full bg-foreground text-background hover:bg-foreground/90">
-                    First episode
-                    <ChevronRight className="w-4 h-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
+            {/* Actions */}
+            <div className="space-y-3">
+              <Link href={`/comic/${comic.slug}/episode/1`} className="block">
+                <Button className="w-full h-12 text-base font-bold bg-primary text-primary-foreground hover:bg-primary/90 rounded-full">
+                  Read First Episode
+                  <ChevronRight className="w-5 h-5 ml-1" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
+      </div>
 
         <Footer />
       </div>

@@ -2,13 +2,24 @@
 
 Status: 🚧 In Progress
 
+## Phase 7: UI Fixes & Data Sync ✅
+
+- [ ] Remove Recently Viewed ⏳
+- [ ] Add cursor-pointer to interactive elements ⏳
+- [ ] Update New Episode badge to Red ⏳
+- [ ] Fix Comic Detail Layout (max-w-7xl) ⏳
+- [ ] Format dates using date-fns ⏳
+- [ ] Fix Next Episode button layout ⏳
+- [ ] Fix Card Rank Number padding ⏳
+- [ ] /verification-and-push (Final Fixes) ⏳
+
 ## Phase 6: Refinements & Data ✅
 
 - [x] Clean up Header Buttons & Border ✅
 - [x] Update Carousel Layout (4 -> 6) ✅
 - [x] Fix Badge Styles ✅
 - [x] Diversify Mock Data & Sections ✅
-- [ ] /verification-and-push (Refinements) ⏳
+- [x] /verification-and-push (Refinements) ✅ [16:44]
 
 ## Phase 1: Branding & Foundation ✅
 

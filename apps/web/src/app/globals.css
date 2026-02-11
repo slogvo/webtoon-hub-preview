@@ -23,7 +23,7 @@
   --input: 240 5.9% 90%;
   --ring: 38 92% 50%;
   --radius: 0.75rem;
-  --new-badge: 142 71% 45%;
+  --new-badge: 0 84% 60%; /* Rose/Red 600-ish */
 }
 
 .dark {
@@ -46,7 +46,7 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 38 92% 50%;
-  --new-badge: 142 71% 45%;
+  --new-badge: 0 84% 60%;
 }
 
 @theme inline {
@@ -163,16 +163,20 @@ body {
 
 .rank-number {
   position: absolute;
-  bottom: -0.5rem;
-  left: -0.5rem;
+  bottom: 0.5rem;
+  left: 0.5rem;
   font-size: 4rem;
   font-weight: 900;
   line-height: 1;
   color: hsl(var(--background));
-  -webkit-text-stroke: 2px hsl(var(--foreground));
+  -webkit-text-stroke: 1.5px hsl(var(--foreground));
   z-index: 5;
-  opacity: 0.8;
+  opacity: 0.9;
   pointer-events: none;
+}
+
+button, .category-pill, .nav-item {
+  cursor: pointer;
 }
 
 .rank-change {

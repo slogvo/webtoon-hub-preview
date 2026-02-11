@@ -75,7 +75,7 @@ const ComicCard = ({
     return (
       <Link
         href={`/comic/${slug}`}
-        className="comic-card shrink-0 group block"
+        className="comic-card shrink-0 group block cursor-pointer"
       >
         {content}
       </Link>
